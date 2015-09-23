@@ -76,4 +76,9 @@ def main(max_iterations=100, tol=10e-6, verbose=False):
     
 if __name__ == "__main__":
 
-    iterations = main(tol=10e-9)
+    iterations = main(tol=10e-6)
+    # explicitly list the iterations if there aren't that many
+    if len(iterations) <= 10:
+        for k, it in enumerate(iterations):
+            # there are way better ways to format this but hey
+            print("step {}: f({}\t,{})\t= {}".format(k,it[0],it[1],it[2]))
