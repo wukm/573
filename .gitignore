@@ -1,0 +1,16 @@
+#.gitignore
+
+# python specific stuff
+__pycache__/
+*.py[cod]
+
+# no hw pdfs, textbooks, etc
+spec/
+# no latex compiling stuff
+**/report/*.log
+**/report/*.fls
+**/report/*.aux
+**/report/*.fdb_latexmk
+**/report/*.pdf
+
+
