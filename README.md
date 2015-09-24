@@ -1,8 +1,8 @@
 # 573
 work folder for a  project-oriented scientific computing class
 
-Notes about running:
--------------------
+notes about this code
+---------------------
 
 Output as shown in the report was generated using the following software:
 
@@ -22,7 +22,7 @@ For convenience, all code and related material for this course (apart
 from certain files like pdf or other large binary blobs) will be hosted on
 https://www.github.com/wukm/573. 
 
-General TODOS:
+general TODOs
 -------------
 
 There are ways to manage versions of packages of software in python so that the
@@ -30,4 +30,6 @@ appropriate software can be obtained and used along with the appropriate
 version of python and any required packages without requiring global
 installation. I plan on setting this up with the current code base at some
 future point. This is a work in progress. 
+
+"Fix" use of matplotlib, either directly or via a wrapper.
 
