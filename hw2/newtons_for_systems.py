@@ -10,7 +10,7 @@ all right, buckle the fuck up
 
 GENERAL NOTES:
 
-*   note that python is 0 indexed, so f_1 is actually accessed as F[0]
+*   since python is 0 indexed, so f_1 is actually accessed as F[0]
     internally. shouldn't really matter but hey
 
 *   holy shit, error handling, what is all this nonsense
@@ -34,6 +34,7 @@ GENERAL NOTES:
 
 import sympy
 import numpy as np
+from scipy.linalg import norm, solve
 
 def parse_symbolic(F_strings, F_args):
     """
@@ -64,39 +65,11 @@ def parse_symbolic(F_strings, F_args):
 
     # similarly, access each component function as F[i] 
     F = tuple((sympy.sympify(fi) for fi in F_strings))
+    
+    # now make it a matrix
+    F = sympy.Matrix(F)
 
     return F, X
-
-def build_jacobian(F,X, lambdify=False):
-    """
-    INPUT
-
-    F is an nx1 symbolic system
-    X is a nx1 iterable of variables in F
-
-    if lambdify, use to sympy.lambdify(...) to create a lambda function
-    for generating each element of J.
-   
-    *to implement*
-
-    OUTPUT
-    
-    J, the jacobian of F w.r.t. X, a nxn symbolic system
-
-    NOTES:
-
-    can I do this for the entire J in one lambda function?
-    """
-    
-    J = [[sympy.diff(fi, xj) for xj in X] for fi in F]
-    
-    if lambdify:
-
-        # J(*x0) will return a 2D list of 1D arrays... :/
-        # check docs, there's a way to actually get an np.array
-        J = sympy.lambdify(X, J, 'numpy')
-
-    return J # J is symbolic nxn
 
 def _lambdify_matrix(A):
     """
@@ -107,9 +80,11 @@ def _lambdify_matrix(A):
     """
     pass
 
-def jacobian(J,x):
 
 if __name__ == "__main__":
+    
+    max_iterations = 100
+    tol = 10e-6
     
     case_one = ["z^2 + 1 - x*y",
                 "x^2 + 2 - x*y*z + y^2",
@@ -117,11 +92,42 @@ if __name__ == "__main__":
             ]
 
     args = "x,y,z"
+
+    #inital guess
+    x = np.array([[1,1,1]]).T   # this shape is annoying to work with
+
     
-    x0 = np.array([[1,1,1]]).T
 
     F, X = parse_symbolic(case_one, args)
-    
-    J = build_jacobian(F,X)
+    J = F.jacobian(X)
+
+    # see lambdify docstring; lambda will return np.array not np.matrix
+    mat2array = [{'ImmutableMatrix': np.array}, 'numpy']
+
+    # args to these must be 1D, so flatten and/or expand
+    f = sympy.lambdify(X, F, modules=mat2array)
+    j = sympy.lambdify(X, J, modules=mat2array)
+
+    for i in range(max_iterations):
+        
+        fi = f(*x.flatten())
+        if norm(fi) < tol:
+            print("tolerance reached in {} iterations!".format(i))
+            break
+        ji = j(*x.flatten())
+
+        # check condition number of ji and error if >10e6 or something
+        
+        if False:
+            raise Exception("J(x^{}) looks singular, aborting".format(i))
 
 
+        # should maybe use a faster method of solving
+        Δx = solve(ji, -fi)
+
+        x = x + Δx
+        print('iteration {}:'.format(i))
+        print("x =", x.flatten())
+        print("F[x] =", fi.flatten())
+        print("J[x] =\n", ji)
+        print('\n')
