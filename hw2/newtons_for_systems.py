@@ -71,34 +71,39 @@ def parse_symbolic(F_strings, F_args):
 
     return F, X
 
-def _lambdify_matrix(A):
+def solve_nonlinear_system(F_strings, F_args, x0, M=100, ε=10e-6,
+        test_condition_number=False):
     """
-    a symbolic "matrixoid" A is turned into a function such that
-    λ_A(x) = A at a particular X, a numpy array
 
-    idk. a magic method
+    INPUT
+
+    F_strings:  an iterable of n strings, each of which refers to up to
+    n symbolic variables in an internally consistent way.
+
+    F_args: a (comma or whitespace) delimited string containing the n symbolic
+    variables used in F_strings
+
+    x0: initial "guess" solution. a numpy array for now
+
+    M: max iterations
+
+    ε: convergence tolerance
+    
+    OUTPUT
+    
+    a solution x
+
+    NOTE:
+
+    additional parameters should be:
+        
+        test_condition_number (error if J(xi) has a high condition number)
+
+        verbose 
     """
-    pass
-
-
-if __name__ == "__main__":
-    
-    max_iterations = 100
-    tol = 10e-6
-    
-    case_one = ["z^2 + 1 - x*y",
-                "x^2 + 2 - x*y*z + y^2",
-                "exp(y) + 3 - exp(x) + z"
-            ]
-
-    args = "x,y,z"
-
-    #inital guess
-    x = np.array([[1,1,1]]).T   # this shape is annoying to work with
-
     
 
-    F, X = parse_symbolic(case_one, args)
+    F, X = parse_symbolic(F_strings, F_args)
     J = F.jacobian(X)
 
     # see lambdify docstring; lambda will return np.array not np.matrix
@@ -108,18 +113,20 @@ if __name__ == "__main__":
     f = sympy.lambdify(X, F, modules=mat2array)
     j = sympy.lambdify(X, J, modules=mat2array)
 
-    for i in range(max_iterations):
+    # set x to initial guess
+    x = x0
+
+    for i in range(M):
         
         fi = f(*x.flatten())
-        if norm(fi) < tol:
+        if norm(fi) < ε:
             print("tolerance reached in {} iterations!".format(i))
             break
         ji = j(*x.flatten())
 
         # check condition number of ji and error if >10e6 or something
-        
-        if False:
-            raise Exception("J(x^{}) looks singular, aborting".format(i))
+        if test_condition_number:
+            raise Exception("Sorry, testing for condition number not implemented yet.")
 
 
         # should maybe use a faster method of solving
@@ -131,3 +138,22 @@ if __name__ == "__main__":
         print("F[x] =", fi.flatten())
         print("J[x] =\n", ji)
         print('\n')
+    else:
+        print("could not find solution within {} iterations.")
+
+    return x
+
+if __name__ == "__main__":
+
+    case_one = ["z^2 + 1 - x*y",
+                "x^2 + 2 - x*y*z + y^2",
+                "exp(y) + 3 - exp(x) + z"
+            ]
+
+    args = "x,y,z"
+
+    x0 = np.array([[1,1,1]]).T
+
+    x_sol = solve_nonlinear_system(case_one, args, x0)
+
+    
