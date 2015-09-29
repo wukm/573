@@ -34,7 +34,7 @@ GENERAL NOTES:
 
 import sympy
 import numpy as np
-from scipy.linalg import norm, solve
+from scipy.linalg import norm, solve, pinv
 
 def parse_symbolic(F_strings, F_args):
     """
@@ -72,7 +72,7 @@ def parse_symbolic(F_strings, F_args):
     return F, X
 
 def solve_nonlinear_system(F_strings, F_args, x0, M=100, ε=10e-6,
-        test_condition_number=False):
+        test_condition_number=False, x_convergence=False):
     """
 
     INPUT
@@ -115,22 +115,33 @@ def solve_nonlinear_system(F_strings, F_args, x0, M=100, ε=10e-6,
 
     # set x to initial guess
     x = x0
+    Δx = None # declare (if we're testing convergence in x)
 
+    #norms = list()
     for i in range(M):
         
         fi = f(*x.flatten())
-        if norm(fi) < ε:
-            print("tolerance reached in {} iterations!".format(i))
-            break
+        #norms.append(norm(fi))
+        if x_convergence and Δx is not None:
+            if norm(Δx) < ε:
+                print("tolerance reached in {} iterations!".format(i))
+                break 
+        else:
+            if norm(fi) < ε:
+                print("tolerance reached in {} iterations!".format(i))
+                break
         ji = j(*x.flatten())
-
+        
         # check condition number of ji and error if >10e6 or something
         if test_condition_number:
             raise Exception("Sorry, testing for condition number not implemented yet.")
 
+        # use pseudoinverse for nonsquare systems
+        if ji.shape[0] == ji.shape[1]: 
+            Δx = solve(ji, -fi)
+        else:
+            Δx = -pinv(ji).dot(fi) 
 
-        # should maybe use a faster method of solving
-        Δx = solve(ji, -fi)
 
         x = x + Δx
         print('iteration {}:'.format(i))
@@ -139,7 +150,7 @@ def solve_nonlinear_system(F_strings, F_args, x0, M=100, ε=10e-6,
         print("J[x] =\n", ji)
         print('\n')
     else:
-        print("could not find solution within {} iterations.")
+        print("could not find solution within {} iterations".format(M))
 
     return x
 
