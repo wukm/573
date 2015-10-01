@@ -6,8 +6,6 @@ Math 573 Homework #2, Question 2(a)
 Solve a symbolic(!?) non-linear system of equations
 via Newton's method.
 
-all right, buckle the fuck up
-
 GENERAL NOTES:
 
 *   since python is 0 indexed, so f_1 is actually accessed as F[0]
