@@ -34,7 +34,7 @@ import sympy
 import numpy as np
 from scipy.linalg import norm, solve, pinv
 
-def parse_symbolic(F_strings, F_args):
+def parse_symbolic(F_strings, F_args, assert_real=False):
     """
     INPUT
 
@@ -42,6 +42,8 @@ def parse_symbolic(F_strings, F_args):
     n symbolic variables in an internally consistent way.
     F_args: a (comma or whitespace) delimited string containing the n symbolic
     variables used in F_strings
+    assert_real: F_args refer to real numbers. If not, no such assumption is
+    made
 
     OUTPUT
     
@@ -59,7 +61,10 @@ def parse_symbolic(F_strings, F_args):
     """
 
     # each arg can be accessed now as X[i] in the order listed
-    X = sympy.symbols(F_args)
+    if not assert_real:
+        X = sympy.symbols(F_args)
+    else:
+        X = sympy.symbols(F_args, real=True)
 
     # similarly, access each component function as F[i] 
     F = tuple((sympy.sympify(fi) for fi in F_strings))
@@ -155,8 +160,8 @@ def solve_nonlinear_system(F_strings, F_args, x0, M=100, ε=10e-6,
 if __name__ == "__main__":
 
     case_one = ["z^2 + 1 - x*y",
-                "x^2 + 2 - x*y*z + y^2",
-                "exp(y) + 3 - exp(x) + z"
+                "x^2 + 2 - x*y*z - y^2",
+                "exp(y) + 3 - exp(x) - z"
             ]
 
     args = "x,y,z"

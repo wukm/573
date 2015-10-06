@@ -30,7 +30,7 @@ import numpy as np
 from newtons_for_systems import parse_symbolic
 
 
-def cm_rk4(F_strings, F_args, x0, N):
+def cm_rk4(F_strings, F_args, x0, N, keep_symbolic=False):
 
     F, X = parse_symbolic(F_strings, F_args)
     print("system parsed!")
@@ -52,17 +52,20 @@ def cm_rk4(F_strings, F_args, x0, N):
     xpl = -Jinv.multiply(F0) # mat_mul syntax is different within sympy?
     print("ODE system calculated")
 
-    # simplify method works in place, whereas sympy.simplify returns!
+    # simplify method works in place
     #xpl.simplify() # for logging
     print("...and simplified")
     
     print("running RK4 with N={}".format(N))
-
-    x_sol = rk4(xpl, X, x0, N)
+    
+    if keep_symbolic:
+        x_sol = rk4_symbolic(xpl, X, x0, N)
+    else:
+        x_sol = rk4(xpl, X, x0, N)
 
     return x_sol
 
-def rk4(Φ, X, x0, N):
+def rk4_symbolic(Φ, X, x0, N, keep_symbolic=False):
     """
     Runge-Kutta Method (Order 4)
     Φ is a symbolic vector whose components give the system of
@@ -75,9 +78,54 @@ def rk4(Φ, X, x0, N):
     X is the symbolic args referred to in Φ
     x0 is the initial guess of the system
     N is the partition size (integer >1)
+    
+    This parallels the function rk4() below, except that everything is
+    handled symbolically (the default behavior is to convert everything into
+    floats/functions that return floats as soon as possible). As a result,
+    rk4_symbolic() should be expect to incur a substantial overhead.""" 
+    
+    h = 1/N
+    w = x0
+    print("running RK4 symbolically =^)")
+    print("x(λ_0 = 0) =")
+    print("\t", w.T)
+    print("*"*30)
+
+
+    for j in range(N):
+
+        k1 = h*phi(*w.flatten())
+        k2 = h*phi(*(w + (1/2)*k1).flatten())
+        k3 = h*phi(*(w + (1/2)*k2).flatten())
+        k4 = h*phi(*(w + k3).flatten())
+        
+        w = w + (1/6)*(k1 + 2*k2 + 2*k3 + k4)
+
+        print("x(λ_{} = {}/{}) = ".format(j+1,j+1,N))
+        print("\t", w.T)
+        print("*"*30)
+   
+    print("done!")
+    return w
+def rk4(Φ, X, x0, N, keep_symbolic=False):
+    """
+    Runge-Kutta Method (Order 4)
+    Φ is a symbolic vector whose components give the system of
+    differential equations
+    
+       [ d(X[i]) / dλ ] = Φ[i]
+
+    where
+    
+    X is the symbolic args referred to in Φ
+    x0 is the initial guess of the system
+    N is the partition size (integer >1)
+
+    pass keep_symbolic=True to use symbolic throughout (default
+    behavior is convert everything into floats / functions that
+    return floats)
     """ 
     
-    # pseudocode, treating Φ as a function
     h = 1/N
     w = x0
     
@@ -144,4 +192,4 @@ if __name__ == "__main__":
     #print("set up complete. running runge-kutta.")
     #x_sol = rk4(xpl, X, x0, N)
    
-    x_sol = cm_rk4(ex1, args, x0, 4)
+    #x_sol = cm_rk4(ex1, args, x0, 4)
