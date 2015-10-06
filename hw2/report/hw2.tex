@@ -1,0 +1,367 @@
+% MATH 573 HW 1
+% LUKE WUKMER
+
+\documentclass[10pt]{article}
+
+% note: some of these are extremely useful and i don't remember why :o
+\usepackage{amsmath, amsthm, amssymb, amsfonts}
+\usepackage{amsxtra, amscd, geometry, graphicx}
+\usepackage{endnotes}
+\usepackage{cancel}
+\usepackage{bm} %allows fancy stuff like bold greek in math mode
+\usepackage{alltt}
+\usepackage{enumerate} %more/easier control over lists, also see enumitem
+%\usepackage[all,cmtip]{xypic}
+\usepackage{mathrsfs}
+\usepackage{listings}
+\usepackage{caption}
+%\usepackage{subfigure}
+%\usepackage{subcaption}
+%\usepackage[pdftex]{hyperref}
+%\usepackage[dvips,bookmarks,bookmarksopen,backref,colorlinks,linkcolor={blue},citecolor={blue},urlcolor={blue}](hyperref}
+
+% Makes the margin size a little smaller, i gots stuff to say
+\geometry{letterpaper,margin=1.3in}
+
+% change up the fonts (pick one only)
+%\usepackage{times}%
+\usepackage{helvet}%
+%\usepackage{palatino}%
+%\usepackage{bookman}%
+
+% These are italic.
+\theoremstyle{plain}
+\newtheorem{thm}{Theorem}
+\newtheorem*{thm*}{Theorem}
+\newtheorem{prop}{Proposition}
+\newtheorem*{prop*}{Proposition}
+\newtheorem{conj}{Conjecture}
+\newtheorem*{conj*}{Conjecture}
+\newtheorem{lem}{Lemma}
+  \makeatletter
+  \@addtoreset{lem}{thm}
+  \makeatother 
+\newtheorem*{lem*}{Lemma}
+\newtheorem{cor}{Corollary}
+  \makeatletter
+  \@addtoreset{cor}{thm}
+  \makeatother 
+\newtheorem*{cor*}{Corollary}
+
+%\newtheorem{lem}[thm]{Lemma}
+%\newtheorem{remark}[thm]{Remark}
+%\newtheorem{cor}[thm]{Corollary}
+%\newtheorem{prop}[thm]{Proposition}
+%\newtheorem{conj}[thm]{Conjecture}
+
+% These are normal (i.e. not italic).
+\theoremstyle{definition}
+\newtheorem*{ack*}{Acknowledgements}
+\newtheorem*{app*}{Application}
+\newtheorem*{apps*}{Applications}
+\newtheorem{defn}{Definition}
+\newtheorem*{defn*}{Definition}
+\newtheorem{eg}{Example}
+  \makeatletter
+  \@addtoreset{eg}{thm}
+  \makeatother 
+\newtheorem*{eg*}{Example}
+\newtheorem*{egs*}{Examples}
+\newtheorem{ex}{Exercise}
+\newtheorem*{ex*}{Exercise}
+\newtheorem*{quest*}{Question}
+\newtheorem{rem}{Remark}
+\newtheorem*{rem*}{Remark}
+\newtheorem{rems}{Remarks}
+\newtheorem*{rems*}{Remarks}
+\newtheorem{prob}{Problem}
+\newtheorem*{prob*}{Problem}
+\newtheorem*{soln*}{Solution}
+\newtheorem{soln}{Solution}
+
+
+% New Commands: Common Math Symbols
+\providecommand{\R}{\mathbb{R}}%
+\providecommand{\N}{\mathbb{N}}%
+\providecommand{\Z}{{\mathbb{Z}}}%
+\providecommand{\sph}{\mathbb{S}}%
+\providecommand{\Q}{\mathbb{Q}}%
+\providecommand{\C}{{\mathbb{C}}}%
+\providecommand{\F}{\mathbb{F}}%
+\providecommand{\quat}{\mathbb{H}}%
+
+% haha, i originally forked this template from one provided by my abstract
+% algebra TA (back in 2012 or something). probably don't need most of these,
+% huh. 
+
+% New Commands: Operators
+\providecommand{\Gal}{\operatorname{Gal}}%
+\providecommand{\GL}{\operatorname{GL}}%
+\providecommand{\card}{\operatorname{card}}%
+\providecommand{\coker}{\operatorname{coker}}%
+\providecommand{\id}{\operatorname{id}}%
+\providecommand{\im}{\operatorname{im}}%
+\providecommand{\diam}{{\rm diam}}%
+\providecommand{\aut}{\operatorname{Aut}}%
+\providecommand{\inn}{\operatorname{Inn}}%
+\providecommand{\out}{{\rm Out}}%
+\providecommand{\End}{{\rm End}}%
+\providecommand{\rad}{{\rm Rad}}%
+\providecommand{\rk}{{\rm rank}}%
+\providecommand{\ord}{{\rm ord}}%
+\providecommand{\tor}{{\rm Tor}}%
+\providecommand{\comp}{{\text{ $\scriptstyle \circ$ }}}%
+\providecommand{\cl}[1]{\overline{#1}}%
+\providecommand{\tr}{{\sf trace}}%
+
+\renewcommand{\tilde}[1]{\widetilde{#1}}%
+\numberwithin{equation}{section}
+
+% i like the squiggly ones more. add as needed
+
+\renewcommand{\Psi}{\varPsi}
+
+\newcommand*\rfrac[2]{{}^{#1}\!/_{#2}}
+
+% a very fancy dot product \ip{f}{g}
+\newcommand\ip[2]{ \left\langle {#1} , {#2} \right\rangle }
+
+% "s.t." for math mode
+\providecommand{\st}{\text{ s.t. }}
+
+% \norm{f} and such, super useful
+\newcommand{\norm}[1]{\left\lVert#1\right\rVert}
+
+% determinant
+%\newcommand{\det}[1]{\textsf{det}\left(#1\right)}
+
+% jacobian
+\providecommand{\J}{\textsf{J}}
+
+% this makes the spacing between lines of font a little bigger
+\newcommand{\spacing}[1]{\renewcommand{\baselinestretch}{#1}\large\normalsize}
+\spacing{1.2}
+
+% END PREAMBLE %%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+\begin{document}
+
+\title{Math 573 HW\textsuperscript{\#}2}
+\author{Luke Wukmer}
+\date{Fall 2015}
+\maketitle \thispagestyle{empty} % remove the page number from the first page
+
+%
+%\bigskip
+
+%%% PROBLEM 1 %%%
+\begin{prob}
+
+    Obtain $\bm{x}^{(1)}$ for the nonlinear system $\bm{F}(\bm{x}) = \bm{0}$, where
+    \[
+            \begin{cases}
+                f_1 = 4x_1^2 - 20x_1+\frac{1}{4}x_2^2 + 8 = 0 \\
+                f_2 = \frac{1}{2} x_1 x_2^2 + 2x_2 + 2x_1 - 5x_2 + 8 = 0
+            \end{cases}
+        \]
+        using the initial approximation $\bm{x}^{(0)} = \bm{0}$ via
+        \begin{enumerate}[\bfseries(a)]
+            \item Newton's method
+            \item steepest descent method (with Newton's divided differences)
+            \item homotopy (continuation) method (with RK4; $N = 2$)
+        \end{enumerate}
+\end{prob}
+
+\begin{soln*}
+
+    \begin{center}
+        \textit{Note: I did not typeset my solutions to this problem.
+        The following should be ignored.}
+        \end{center}
+    \[ 
+            \J(\bm{x}) = \begin{bmatrix}
+                    8x_1 - 20 & \frac{1}{2}x_2 \\
+                    \frac{1}{2}x_2^2 + 2 & x_1 x_2 - 5
+                        \end{bmatrix}
+                    \]
+    \[ 
+            \left[\J(\bm{x})\right]^{-1} = 
+        \frac{1}{\det\left(\J\right)} \begin{bmatrix}
+                        x_1 x_2 - 5 & -\frac{1}{2} x_2 \\
+                    -\frac{1}{2}x_2^2 - 2 & 8x_1 - 20
+                        \end{bmatrix}
+    \]
+    where $ \det(\J) = 8 x_1^2 x_2 - 20 x_1 x_2 - 40 x_1 - \frac{1}{4}x_2^3 - x_2 + 100 $.
+
+    \[
+        F_0 = F(\bm{x}^{(0)}) = \begin{bmatrix} 8 \\ 8 \end{bmatrix}
+        \]
+
+The following code shows numerical results for parts (a),(c) after one iteration:
+
+\begin{small} \begin{verbatim}
+wukm@zoo ~/573/hw2 (git)-[master] % python luke_Wukmer_HW2_Prob1.py     
+newton's method (one iteration)
+________________________________________ i=1:
+x = [ 0.4   1.76]
+F[x] = [ 8.  8.]
+||F[x]|| = 11.313708499
+could not find solution within 1 iterations
+(newton's method): [[ 0.4   1.76]]
+****************************************
+continuation method (one iteration)
+x^(1) =  [[ 0.50014773  2.00179684]]
+\end{verbatim}\end{small}
+\end{soln*}
+\hrulefill
+\newpage
+%%% PROBLEM 2
+\begin{prob}
+    Implement \textbf{Newton's Method} to solve a system of nonlinear equations. 
+
+    Refer to \texttt{newtons\_for\_systems.py} for the algorithm and test case.
+    We demonstrate the function of the algorithm on a particular nonlinear system of equations:
+    \[ 
+    \begin{cases}
+        xy = z^2 + 1 \\
+        xyz + y^2 = x^2 + 2 \\
+        e^x + z = e^y + 3
+    \end{cases}
+\]
+
+Using the initial estimate $\bm{x}^{(0)} = [1,1,1]^T$ and tolerance $\epsilon=$\texttt{10e-6},
+\begin{small}
+\begin{verbatim}
+wukm@zoo ~/573/hw2 (git)-[master] % python newtons_for_systems.py
+________________________________________ i=1:
+x = [ 2.1893261   1.59847516  1.39390063]
+F[x] = [ 1.  1.  2.]
+||F[x]|| = 2.44948974278
+________________________________________ i=2:
+x = [ 1.85058965  1.44425142  1.278224  ]
+F[x] = [-0.55662442 -0.64004553 -2.37760872]
+||F[x]|| = 2.52438353632
+________________________________________ i=3:
+x = [ 1.7801612   1.42443598  1.23929244]
+F[x] = [-0.03886012 -0.07751077 -0.40311672]
+||F[x]|| = 0.412336169632
+________________________________________ i=4:
+x = [ 1.77767471  1.42396093  1.23747382]
+F[x] = [ 0.0001201  -0.00254961 -0.01459142]
+||F[x]|| = 0.0148129839519
+________________________________________ i=5:
+x = [ 1.77767192  1.4239606   1.23747112]
+F[x] = [  2.12617272e-06  -3.48401277e-06  -1.78499665e-05]
+||F[x]|| = 1.83106597611e-05
+tolerance reached in 5 iterations!
+x_sol = [ 1.77767192  1.4239606   1.23747112]
+\end{verbatim}
+\end{small}
+
+For this particular system, Newton's method convergences extremely quickly.
+
+\end{prob}
+\hrulefill
+%%% PROBLEM 3 %%%
+\begin{prob}
+    An implementation of the \textbf{Homotopy Continuation} method (using RK4) to solve a system of
+    nonlinear equations.
+    
+    The main function in question is \texttt{continuation.cm\_rk4}. This function accepts
+    a list of strings $[f_1, f_2, \ldots, f_n]$ representing the nonlinear system $F \st F(x)=0$
+    and a string of comma (or space) separated variable names referred to in this list. 
+    Also required is an initial guess $x_0$ for the system and partition size $N$ to be used in RK4.
+    
+    If \texttt{continuation.py} is run by itself, it displays the method on
+    Example 1, \S10.5 in Burden (see pp.664--5)
+
+\begin{small}
+\begin{verbatim}
+wukm@zoo ~/573/hw2 (git)-[master] % python continuation.py
+system parsed successfully.
+jacobian found ...and inverted! 
+initial system calculated.
+ODE system x`(lambda) calculated...and simplified!
+running RK4 with N=4
+x(lambda_0 = 0) =
+	 [[0 0 0]]
+******************************
+x(lambda_1 = 1/4) = 
+	 [[ 0.12499997 -0.00329005 -0.13092026]]
+******************************
+x(lambda_2 = 2/4) = 
+	 [[ 0.24999977 -0.0045074  -0.26185576]]
+******************************
+x(lambda_3 = 3/4) = 
+	 [[ 0.3749997  -0.00343035 -0.39276344]]
+******************************
+x(lambda_4 = 4/4) = 
+	 [[  4.99999996e-01   1.26686085e-08  -5.23598776e-01]]
+******************************
+done!
+\end{verbatim}  
+\end{small}
+The output $\bm{x}(1)$ given above agrees with the printed solution.
+
+\hrulefill
+
+We now use this method to solve the nonlinear system from Question 2:
+\[ 
+    \begin{cases}
+        xy = z^2 + 1 \\
+        xyz + y^2 = x^2 + 2 \\
+        e^x + z = e^y + 3
+    \end{cases}
+\]
+
+with initial estimate $\bm{x}^{(0)} = [1,1,1]^T$. Using $N=4$, 
+\begin{small}
+\begin{verbatim}
+wukm@zoo ~/573/hw2 (git)-[master] % python luke_Wukmer_HW2_Prob3.py 
+system parsed successfully...
+jacobian found ...and inverted! 
+initial system calculated
+ODE system x`(lambda) calculated
+...and simplified
+running RK4 with N=4
+x(lambda_0 = 0) =
+	 [[1 1 1]]
+******************************
+x(lambda_1 = 1/4) = 
+	 [[ 1.25921938  1.1339675   1.08530944]]
+******************************
+x(lambda_2 = 2/4) = 
+	 [[ 1.46358547  1.24440507  1.14946569]]
+******************************
+x(lambda_3 = 3/4) = 
+	 [[ 1.6328158   1.339472    1.19878598]]
+******************************
+x(lambda_4 = 4/4) = 
+	 [[ 1.77767758  1.42396096  1.23746503]]
+******************************
+done!
+|| F[x(1)] || =  4.24053219262719e-5
+solution according to sympy.solvers.nsolve:
+[1.77767191801074  1.42396059788849  1.2374711177317]
+\end{verbatim}
+\end{small}
+
+Thus the found solution $\bm{x}(1)$ results in $\norm{\bm{F}(\bm{x}(1))} \approx 0$,
+and agrees very closely with the builtin nonlinear equation solver
+(similar to MATLAB's \texttt{fsolve}) as well as the solution via Newton's method in Question 2.
+
+The code for \texttt{luke\_Wukmer\_HW2\_Prob3.py} also allows any $N$ to be quickly tested. In general,
+we see much higher accuracy for larger $N$. For example,
+\begin{small}
+    \begin{verbatim}
+wukm@zoo ~/573/hw2 (git)-[master] % python luke_Wukmer_HW2_Prob3.py 1000
+||F(x*)|| =  3.02013314551163e-15
+solution according to sympy.solvers.nsolve:
+[1.77767191801074  1.42396059788849  1.2374711177317]
+    \end{verbatim}
+\end{small}
+
+\end{prob}
+\end{document}

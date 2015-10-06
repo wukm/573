@@ -11,8 +11,6 @@ GENERAL NOTES:
 *   since python is 0 indexed, so f_1 is actually accessed as F[0]
     internally. shouldn't really matter but hey
 
-*   holy shit, error handling, what is all this nonsense
-
 *   sympy.sympify uses eval() so santitize input
 
 *   to evaluate a component F[i] for some particular \vec{x}, you can do the
@@ -33,6 +31,7 @@ GENERAL NOTES:
 import sympy
 import numpy as np
 from scipy.linalg import norm, solve, pinv
+from numpy.linalg import cond
 
 def parse_symbolic(F_strings, F_args, assert_real=False):
     """
@@ -43,11 +42,13 @@ def parse_symbolic(F_strings, F_args, assert_real=False):
     F_args: a (comma or whitespace) delimited string containing the n symbolic
     variables used in F_strings
     assert_real: F_args refer to real numbers. If not, no such assumption is
-    made
+                 made (note: deprecated)
 
     OUTPUT
     
-    the system F which is totally cool
+    F    A sympy.Matrix of shape (n,1) whose elements are the symbolic equations
+         f1, f2, ... fn
+    X    A tuple of sympy symbol objects representing the variables in F
 
     NOTES:
     
@@ -79,6 +80,7 @@ def solve_nonlinear_system(F_strings, F_args, x0, M=100, ε=10e-6,
     """
 
     INPUT
+    -----
 
     F_strings:  an iterable of n strings, each of which refers to up to
     n symbolic variables in an internally consistent way.
@@ -86,23 +88,25 @@ def solve_nonlinear_system(F_strings, F_args, x0, M=100, ε=10e-6,
     F_args: a (comma or whitespace) delimited string containing the n symbolic
     variables used in F_strings
 
-    x0: initial "guess" solution. a numpy array for now
+    x0: initial "guess" solution. an nx1 np.array
 
     M: max iterations
 
     ε: convergence tolerance
     
+    optional arguments:
+
+    x_convergence:  if True, convergerce will be tested on size of Δx rather
+                    than size of F(x). Not useful; defaults to False
+    
+    test_condition_number: at each iteration, the jacobian's condition
+                           number is evaluated to test for singularity.
+                           Expensive; defaults to False
+
     OUTPUT
+    ------
     
     a solution x
-
-    NOTE:
-
-    additional parameters should be:
-        
-        test_condition_number (error if J(xi) has a high condition number)
-
-        verbose 
     """
     
 
@@ -137,24 +141,27 @@ def solve_nonlinear_system(F_strings, F_args, x0, M=100, ε=10e-6,
         
         # check condition number of ji and error if >10e6 or something
         if test_condition_number:
-            raise Exception("Sorry, testing for condition number not implemented yet.")
-
+            if cond(ji) > 10e6:
+                raise Exception("jacobian looks singular. aborting.")
+            
         # use pseudoinverse for nonsquare systems
         if ji.shape[0] == ji.shape[1]: 
             Δx = solve(ji, -fi)
         else:
             Δx = -pinv(ji).dot(fi) 
 
-
         x = x + Δx
-        print('iteration {}:'.format(i))
+
+        print('_'*40, 'i={}:'.format(i+1))
         print("x =", x.flatten())
         print("F[x] =", fi.flatten())
-        print("J[x] =\n", ji)
-        print('\n')
+        print("||F[x]|| =", norm(fi))
+        #print("J[x] =\n", ji)
     else:
         print("could not find solution within {} iterations".format(M))
 
+
+    
     return x
 
 if __name__ == "__main__":
@@ -168,6 +175,6 @@ if __name__ == "__main__":
 
     x0 = np.array([[1,1,1]]).T
 
-    x_sol = solve_nonlinear_system(case_one, args, x0)
+    x_sol = solve_nonlinear_system(case_one, args, x0, ε=10e-6)
+    print("x_sol =", x_sol.flatten())
 
-    
