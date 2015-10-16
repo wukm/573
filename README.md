@@ -1,13 +1,14 @@
 # 573
 work folder for a  project-oriented scientific computing class
 
+![alt tag](https://raw.github.com/wukm/573/master/hw3/doggy_splines.png)
 notes about this code
 ---------------------
 
 Output as shown in the report was generated using the following software:
 
-    python 3.4.3-3
-    python-numpy 1.9.2-2
+    ~~python 3.4.3-3~~ 3.5.x
+    ~~python-numpy 1.9.2-2~~ 1.10.1
     python-scipy 0.16.0-1
     python-matplotlib 1.4.3-2
     python-sympy 0.7.6.1-1 
