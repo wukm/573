@@ -32,5 +32,24 @@ def blending_mesh(meshsize=500):
 
     return (1/6)*np.array(B)
 
-        
+def b_splines(P, meshsize=500):        
+    """
+    a generator for bsplines. each call returns a successive b-spline (which is
+    an array of shape (meshsize, P.shape[1])) to be graphed. P.shape[0] - 3 such
+    points will be generated. This function does not return a lambda/symbolic
+    version of these splines but the actual meshgrid or whatever
+    """
+    
+    N = P.shape[0] # for convenience, the number of total points
+
+    assert N > 3, "Not enough points to make a spline!"
+    
+    B = blending_mesh(meshsize) # it's constant
+
+    for k in range(N-3):
+
+        yield B @ P[k:k+4] 
+
+    
+
 
