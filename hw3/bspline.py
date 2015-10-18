@@ -27,7 +27,7 @@ def blending_mesh(meshsize=500):
 
     mesh = np.linspace(0,1,num=meshsize) # [0,1] mesh with meshsize points
     
-    # probably don't need to do this way
+    # probably don't need to do this way but it gets it done?
     B = [[b1(t), b2(t), b3(t), b4(t)] for t in mesh]
 
     return (1/6)*np.array(B)
@@ -49,7 +49,4 @@ def b_splines(P, meshsize=500):
     for k in range(N-3):
 
         yield B @ P[k:k+4] 
-
-    
-
 

@@ -42,4 +42,4 @@ if __name__ == "__main__":
         ax.plot(*g.T)
 
 
-    fig.savefig('doggy_splines.png')
+    fig.savefig('report/doggy_splines.png')
