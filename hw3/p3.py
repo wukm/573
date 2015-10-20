@@ -14,17 +14,36 @@ final = [ 45, 54, 99, 99, 76, 83, 62, 53, 83, 59,
     54, 65, 65, 74, 45, 70, 51, 67, 79, 45]
 
 data = np.array([hw, final])
+#conveniences
+x, y = data
 
 # part a 
 
 A = poly_lsq(data, 1)
+
+print("line coefficients:", A)
 X = np.linspace(100, 400, 200) # fix bounds to match size of data
 p = lambda x: sum(ai*(x**i) for i, ai in enumerate(A))
-Y = p(X)
+print("p_1(90)=",  p(90))
+print("p_1(60)=",  p(60))
+
+lsq_error = np.sum((p(x) - y)**2)
+print("linear error = ", lsq_error)
+
+Y = p(X) # for graphing
 
 a, b = exponential_lsq(data)
+print("exp. coefficients, a={}, b={}".format(a,b))
 pe = lambda x: b*x**a
+print("p_e(90)=",  pe(90))
+print("p_e(60)=",  pe(60))
 YX = pe(X)
+exp_error = np.sum((pe(x) - y)**2)
+print("exponential error = ", exp_error)
+
+
+# graphing stuff
+
 fig = plt.figure(1)
 ax = fig.gca()
 ax.scatter(*data)

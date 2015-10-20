@@ -278,6 +278,7 @@ the least-squares polynomial of degree 3 is
 
 \end{prob}
 
+\hrulefill
 %%% PROBLEM 2
 \begin{prob}
     A cardinal spline is a sequence of individual curves joined to form a
@@ -383,9 +384,24 @@ the least-squares polynomial of degree 3 is
 
 We plot these blending functions for several values of $c$ in fig 4.
 \end{soln*}
+\hrulefill
 %%% PROBLEM 3
 \begin{prob} Least-squares on larger data set.
 
+
+\begin{verbatim}
+wukm@zoo ~/573/hw3 (git)-[master] % python p3.py
+line coefficients: [-0.80283142  0.22334848]
+p_1(90)= 19.298531812
+p_1(60)= 12.5980774024
+linear error =  6153.81704917
+exp. coefficients, a=0.8139010446670706, b=0.6284427563244188
+p_e(90)= 24.4808078266
+p_e(60)= 17.599684601
+exponential error =  6363.48808059
+\end{verbatim}
+
+\subsection*{TODO}
     \begin{itemize}
     \item Discuss implemenation, file names.
     \item Show the equations
@@ -395,16 +411,21 @@ We plot these blending functions for several values of $c$ in fig 4.
     \item Point to Figure 5.
     \item Do the prediction, (part (c)).
     \end{itemize}
-
 \end{prob}
+
+\hrulefill
+
 %%% PROBLEM 4
 \begin{prob} B-splines.
+    
+    \subsection*{TODO}
     \begin{itemize}
         \item Describe theory briefly, just like the setup (do this last)
-        \item Reproduce "mystery table" i guess
         \item Discuss implementation briefly (especially pre-parametrized blending functions).
-        \item It is a puppy.
+        \item Reproduce "mystery table" I guess?
+        \item Hey look, it's a puppy.
     \end{itemize}
+
 \end{prob}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
