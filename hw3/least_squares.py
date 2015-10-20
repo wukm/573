@@ -2,11 +2,6 @@
 
 import numpy as np
 from numpy.linalg import solve
-import matplotlib.pyplot as plt
-
-# set up least squares problem
-
-
 
 def poly_lsq(data, n):
     """
@@ -14,7 +9,8 @@ def poly_lsq(data, n):
     """
     # parse input 
     data = np.array(data)
-
+    
+    # make sure data is 2D & get into desired shape
     if 2 == data.shape[0]:
         data = data.T
     elif 2 == data.shape[1]:
@@ -29,15 +25,15 @@ def poly_lsq(data, n):
     
     X = np.concatenate([x**i for i in range(n+1)], axis=1)
      
-    print('normal\t', "_"*30)
-    print('X=\n', X)
+    #print('normal\t', "_"*30)
+    #print('X=\n', X)
 
     M = X.T @ X
     b = X.T @ y
 
-    print('y=',y)
-    print('M=\n',M)
-    print('b=\n',b)
+    #print('y=',y)
+    #print('M=\n',M)
+    #print('b=\n',b)
 
     a = solve(M,b) # G.E. or whatever
     a = a.flatten() # i don't need the shape anymore, want easy iteration
@@ -45,6 +41,8 @@ def poly_lsq(data, n):
 
 def _alt_lsq(data, degree):
     """
+    deprecated.
+
     least squares interpolating of the 2D data
     with a polynomial of given degree
 
@@ -66,9 +64,11 @@ def _alt_lsq(data, degree):
     for i in range(n+1):
         M[i] = [sum(X**(i+j)) for j in range(n+1)]
         b[i] = sum(Y*X**i) 
-    print("degree", degree, '\t'+'_'*30)  
-    print('M=\n',M)
-    print('b=\n',b)
+
+    #print("degree", degree, '\t'+'_'*30)  
+    #print('M=\n',M)
+    #print('b=\n',b)
+
     a = solve(M,b)
     
     return a
