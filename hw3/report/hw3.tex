@@ -4,6 +4,7 @@
 \documentclass[10pt]{article}
 
 % note: some of these are extremely useful and i don't remember why :o
+%\usepackage{savetrees} % disable custom geometry stuff if you do this
 \usepackage{amsmath, amsthm, amssymb, amsfonts}
 \usepackage{amsxtra, amscd, geometry, graphicx}
 \usepackage{endnotes}
@@ -137,12 +138,13 @@
 \providecommand{\J}{\textsf{J}}
 
 % this makes the spacing between lines of font a little bigger
-\newcommand{\spacing}[1]{\renewcommand{\baselinestretch}{#1}\large\normalsize}
-% \spacing{1.2}
+%\newcommand{\spacing}[1]{\renewcommand{\baselinestretch}{#1}\large\normalsize}
+%\spacing{1.2}
+
+\newcommand*\mcol[1]{\overset{\big\uparrow}{\underset{\big\downarrow}{#1}}}
 
 % Makes the margin size a little smaller, i gots stuff to say
-%\geometry{letterpaper,margin=1}
-
+%\geometry{letterpaper,margin=1.2}
 % END PREAMBLE %%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -156,7 +158,58 @@
 
 %%% PROBLEM 1
 \begin{prob}
-    Least squares stuff by hand.
+    Least squares polynomial of degree $\leq n$, $p(x) = \sum_{k=0}^n a_k x^k$
+    with $m>n$ data points given by
+
+    \[      \mathbb{X}^T\mathbb{X}\, \bm{a} = \mathbb{X}^T \bm{y}
+    \]
+    where \[
+            \mathbb{X} := \begin{bmatrix}
+                \uparrow & \uparrow & \uparrow &    & \uparrow \\
+            1       & x_i & (x_i)^2 & \cdots & (x_i)^n      \\\
+            \downarrow & \downarrow & \downarrow &  & \downarrow 
+            \end{bmatrix}
+\]
+
+\begin{enumerate}[\bfseries(a)]
+\item $n=2$: 
+\item $n=3$:
+    Setting $\frac{\partial E_2(a_0, \ldots , a_3)}{\partial a_i} = 0$ for each $i$
+    results in the system
+\[
+\begin{bmatrix}
+    4          & \sum (x_i)   & \sum x_i^2 & \sum x_i^3 \\
+    \sum x_i   & \sum (x_i)^2 & \sum x_i^3 & \sum x_i^4 \\
+    \sum x_i^2 & \sum (x_i)^3 & \sum x_i^4 & \sum x_i^5 \\
+    \sum x_i^3 & \sum (x_i)^4 & \sum x_i^5 & \sum x_i^6 \\
+\end{bmatrix}
+\begin{bmatrix} a_0 \\ a_1 \\ a_2 \\ a_3 \end{bmatrix}
+=
+\begin{bmatrix} \sum y_i \\ \sum y_i x_i \\ \sum y_i x_i^2 \\ \sum y_i x_i^3 \end{bmatrix}
+\]
+Substituting in the values from Table 1, we have
+\[
+\begin{pmatrix}
+4.      &   4.9     &   6.15    &   7.903   \\
+4.9     &   6.15    &   7.903   &  10.3827  \\
+6.15    &   7.903   &  10.3827  &  13.91719 \\
+7.903   &  10.3827  &  13.91719 &  18.988995
+\end{pmatrix}
+\begin{bmatrix} a_0 \\ a_1 \\ a_2 \\ a_3 \end{bmatrix}
+= \begin{pmatrix} 8.46    \\ 10.544   \\ 13.459   \\ 17.57288 \end{pmatrix}
+\]
+whose solution is
+$\bm{a} = \begin{bmatrix} 1.6575 & -1.38416667 & 2.15 & -0.58333333 \end{bmatrix}^T$. Thus
+the least-squares polynomial of degree 3 is
+\[
+        y = p_3(x) = 1.6575  - 1.38416667 x + 2.15 x^2  - 0.58333333 x^3
+\]
+
+\item   $y= bx^a$ \textit{form}:
+    Solving the equations $\frac{\partial E_2}{\partial a} , \frac{\partial E_2}{\partial b}$
+    results in a nasty system of nonlinear equations, so we search for the
+    linearized form of our target equation.
+\end{enumerate}
 \end{prob}
 %%% PROBLEM 2
 \begin{prob}
@@ -278,7 +331,7 @@ We plot these blending functions for several values of $c$ below.
     \begin{figure}[h]
         \centering
         \includegraphics[width=\textwidth]{doggy_splines}
-        \caption{B-spline fitting of the data in Table 3}
+        %\caption{B-spline fitting of the data in Table 3}
     \end{figure}
 \end{prob}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

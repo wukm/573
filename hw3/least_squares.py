@@ -8,35 +8,72 @@ import matplotlib.pyplot as plt
 
 
 
-def polynomial_lsq(data, n):
-
+def poly_lsq(data, n):
+    """
+    returns the coefficients of the degree n poly
+    """
     # parse input 
     data = np.array(data)
-    try:
-        data = data.reshape((-1,2))
-    except ValueError:
+
+    if 2 == data.shape[0]:
+        data = data.T
+    elif 2 == data.shape[1]:
+        pass
+    else:
         raise Exception("Sorry, can only deal with 2D data right now")
 
     # conveniences
     m = data.shape[0] # number of data points
-    y = data[:,1] 
-
-    # add a ones column to data
-    X = np.concatenate((np.ones((m,1)), data), axis=1)
+    x = data[:,0].reshape((-1,1))
+    y = data[:,1].reshape((-1,1))
     
-    M t X.T @ X
+    X = np.concatenate([x**i for i in range(n+1)], axis=1)
+     
+    print('normal\t', "_"*30)
+    print('X=\n', X)
+
+    M = X.T @ X
     b = X.T @ y
+
+    print('y=',y)
+    print('M=\n',M)
+    print('b=\n',b)
 
     a = solve(M,b) # G.E. or whatever
     a = a.flatten() # i don't need the shape anymore, want easy iteration
-    # make a function
-    #p = lambda x: sum(ai*(x**i) for i, ai in enumerate(a))
-    # error
-    #lsq_error = ((p(x) - y)**2).sum()
+    return a
+
+def _alt_lsq(data, degree):
+    """
+    least squares interpolating of the 2D data
+    with a polynomial of given degree
+
+    returns the coefficients a_0 , ..., a_{n+1}
+    """
+    
+    # make sure size is right first
+    d = np.array(data).reshape((2,-1))
+
+    # conveniences
+    n, m = degree, d.shape[1]
+    X, Y = d
+    
+    # initialize 
+    M = np.empty((n+1,n+1))
+    b = np.empty((n+1,1))
+
+    # populate these in a boring way
+    for i in range(n+1):
+        M[i] = [sum(X**(i+j)) for j in range(n+1)]
+        b[i] = sum(Y*X**i) 
+    print("degree", degree, '\t'+'_'*30)  
+    print('M=\n',M)
+    print('b=\n',b)
+    a = solve(M,b)
     
     return a
 
-def log_fit(data):
+def exponential_lsq(data):
     """
     returns a,b corresponding to the form y = bx^a
     """
@@ -44,31 +81,13 @@ def log_fit(data):
     data = np.array(data)
     data = np.log(data)
 
-    a0, a1 = polynomial_lsq(data, 2)
+    a0, a1 = poly_lsq(data, 1)
     
     a = a1
     b = np.exp(a0) 
 
     return a, b
 
-if __name__ == "__main__":
     
-    # Table 1: Data for Problem 1.
-    TABLE_1 = [[  1.0,    1.1,    1.3,    1.5],
-               [ 1.84,   1.96,   2.21,   2.45]]
-
-    N = 2 # degree of least-squares polynomial to construct
-    #print("A=\n", A)
-    #print("b=\n", b)
-    #print("solution:\n", a)
-       
-    #print("least squared error:", lsq_error)
-       
-    X = np.linspace(0,2,100) # fix bounds to match size of data
-       
-    Y = p(X)    # this amazingly works!
-       
-    plt.scatter(x, y)
-    plt.plot(X,Y)
 
 
