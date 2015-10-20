@@ -17,10 +17,22 @@ data = np.array([hw, final])
 
 # part a 
 
-A = polynomial_lsq(data, 2)
-X = np.linspace(0, 400, 200) # fix bounds to match size of data
+A = poly_lsq(data, 1)
+X = np.linspace(100, 400, 200) # fix bounds to match size of data
 p = lambda x: sum(ai*(x**i) for i, ai in enumerate(A))
 Y = p(X)
 
-plt.scatter(*data)
-plt.plot(X,Y)
+a, b = exponential_lsq(data)
+pe = lambda x: b*x**a
+YX = pe(X)
+fig = plt.figure(1)
+ax = fig.gca()
+ax.scatter(*data)
+ax.plot(X,Y, label=r'$p_2(x)$')
+ax.plot(X,YX, label=r'$y(x)=bx^a$')
+ax.set_title('least squares problem 3(a)')
+ax.set_ylabel('final score (pts)')
+ax.set_xlabel('hw score (pts)')
+ax.legend()
+
+fig.savefig('report/p3.png')

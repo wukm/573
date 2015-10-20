@@ -5,10 +5,12 @@
 
 % note: some of these are extremely useful and i don't remember why :o
 %\usepackage{savetrees} % disable custom geometry stuff if you do this
+\usepackage{titling}    % contol over title & stuff
 \usepackage{amsmath, amsthm, amssymb, amsfonts}
 \usepackage{amsxtra, amscd, geometry, graphicx}
 \usepackage{endnotes}
 \usepackage{cancel}
+\usepackage{wrapfig}    %inline figs
 \usepackage{bm} %allows fancy stuff like bold greek in math mode
 \usepackage{alltt}
 \usepackage{enumerate} %more/easier control over lists, also see enumitem
@@ -27,6 +29,10 @@
 \usepackage{helvet}%
 %\usepackage{palatino}%
 %\usepackage{bookman}%
+
+%%% titling stuff 
+\posttitle{\par\end{center}}
+\setlength{\droptitle}{-.5in}
 
 % These are italic.
 \theoremstyle{plain}
@@ -144,7 +150,7 @@
 \newcommand*\mcol[1]{\overset{\big\uparrow}{\underset{\big\downarrow}{#1}}}
 
 % Makes the margin size a little smaller, i gots stuff to say
-%\geometry{letterpaper,margin=1.2}
+\geometry{letterpaper,margin=.8in}
 % END PREAMBLE %%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -172,7 +178,7 @@
 \]
 
 \begin{enumerate}[\bfseries(a)]
-\item $n=2$: 
+\item $n=2$: Write stuff here about the things 
 \item $n=3$:
     Setting $\frac{\partial E_2(a_0, \ldots , a_3)}{\partial a_i} = 0$ for each $i$
     results in the system
@@ -316,23 +322,44 @@ the least-squares polynomial of degree 3 is
 
 We plot these blending functions for several values of $c$ below.
 \begin{figure}[h]
-    \centering
-    \includegraphics[width=1\textwidth]{cardinals}
+    \begin{center}
+    \includegraphics[width=.8\textwidth]{cardinals}
     \caption{Graphing the blending functions of the cardinal spline for several values of $c$.}
+    \end{center}
 \end{figure}
 \end{soln*}
 %%% PROBLEM 3
 \begin{prob}
     Least squares line
+    Least squares line
+    Least squares line
+    Least squares line
+    Least squares line
+    Least squares line
+    Least squares line
+    Least squares line
+    Least squares line
+    Least squares line
+    Least squares line
+    Least squares line
+    Least squares line
+    Least squares line
+    Least squares line
+    \begin{wrapfigure}{r}{0.5\textwidth}
+        \begin{center}
+        \includegraphics[width=0.48\textwidth]{p3}
+    \end{center}
+        \caption{HW Scores \& stuff bleh title}
+    \end{wrapfigure}
 \end{prob}
 %%% PROBLEM 4
 \begin{prob}
     B-splines.
-    \begin{figure}[h]
+    \begin{wrapfigure}{r}{0.5\textwidth}
         \centering
-        \includegraphics[width=\textwidth]{doggy_splines}
-        %\caption{B-spline fitting of the data in Table 3}
-    \end{figure}
+        \includegraphics[width=0.48\textwidth]{doggy_splines}
+        \caption{B-spline fitting of the doggy-data in Table 3}
+    \end{wrapfigure}
 \end{prob}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \end{document}
