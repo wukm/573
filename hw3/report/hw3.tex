@@ -30,9 +30,6 @@
 %\usepackage{palatino}%
 %\usepackage{bookman}%
 
-%%% titling stuff 
-\posttitle{\par\end{center}}
-\setlength{\droptitle}{-.5in}
 
 % These are italic.
 \theoremstyle{plain}
@@ -151,6 +148,10 @@
 
 % Makes the margin size a little smaller, i gots stuff to say
 \geometry{letterpaper,margin=.8in}
+
+% titling stuff (from package titling)
+\posttitle{\par\end{center}}
+\setlength{\droptitle}{-.5in}
 % END PREAMBLE %%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -222,17 +223,11 @@ In particular, we consider the following data ($m=4$):
     $\bm{a} = \begin{bmatrix} 0.55253769  & 1.32751256 & -0.04145729\end{bmatrix}^T$
     corresponding to the polynomial
     \[
-            y = p_2(x) := 0.55253769 + 1.32751256 \,x - 0.04145729\, x^2
+            \boxed{y = p_2(x) := 0.55253769 + 1.32751256 \,x - 0.04145729\, x^2}
         \]
         with least squares error
         $E_2(\bm{a}) = \sum_{i=1}^m \left[\, p_2(x_i) - y_i\, \right]^2 = 1.23115577889\mathsf{e}-5$.
-            
-        \begin{figure}[p]
-        \begin{center}
-        \includegraphics[width=0.8\textwidth]{p1_2}
-        \caption{Least squares polynomial degree (2)}
-        \end{center}
-    \end{figure}
+        See figure 1. 
 \item $n=3$:
     Setting $\frac{\partial E_2(a_0, \ldots , a_3)}{\partial a_i} = 0$ for each $i$
     results in the system
@@ -262,27 +257,23 @@ whose solution is
 $\bm{a} = \begin{bmatrix} 1.6575 & -1.38416667 & 2.15 & -0.58333333 \end{bmatrix}^T$. Thus
 the least-squares polynomial of degree 3 is
 \[
-        y = p_3(x) = 1.6575  - 1.38416667 x + 2.15 x^2  - 0.58333333 x^3
+        \boxed{y = p_3(x) = 1.6575  - 1.38416667 x + 2.15 x^2  - 0.58333333 x^3}
 \]
-
-\begin{figure}[p]
-        \begin{center}
-        \includegraphics[width=0.8\textwidth]{p1_3}
-        \caption{Least squares polynomial degree (3)}
-        \end{center}
-    \end{figure}
+        with least squares error
+        $E_2(\bm{a}) = \sum_{i=1}^m \left[\, p_2(x_i) - y_i\, \right]^2 =
+        E_2(\bm{a})= 8.75706449435 \mathsf{e}-24$.
+    See figure 2 below.
 \item   $y= bx^a$ form:
-    Solving the equations $\frac{\partial E_2}{\partial a} , \frac{\partial E_2}{\partial b}$
-    results in a nasty system of nonlinear equations, so we search for the
-    linearized form of our target equation. Continue the mild derivation.
+    Solving the equations $\frac{\partial E_2}{\partial a} = 0 , \frac{\partial E_2}{\partial b} = 0$
+    involves a nasty system of nonlinear equations, so we search for the
+    linearized form of our target equation. \textbf{Continue the mild derivation.}
 
-    The solution of the system is $p(x) = (1.8362676528) x^{0.708717475596}$
-    \begin{figure}[p]
-        \begin{center}
-            \includegraphics[width=0.8\textwidth]{p1_exp}
-        \caption{Least squares polynomial degree (3)}
-        \end{center}
-    \end{figure}
+    The solution of the system is
+    \[\boxed{p(x) = (1.8362676528) x^{0.708717475596}}\]
+    with least squares error
+    $E_2(\bm{a}) = \sum_{i=1}^m \left[\, p(x_i) - y_i\, \right]^2 =  4.31903088848\mathsf{e}-05$.
+    See figure 3.
+\item Comparing the least squared errors, it seems the polynomial of degree 3 gives the best fit.
 \end{enumerate}
 
 \end{prob}
@@ -390,39 +381,74 @@ the least-squares polynomial of degree 3 is
             \end{matrix}
     \end{align*}
 
-We plot these blending functions for several values of $c$ below.
-\begin{figure}[h]
+We plot these blending functions for several values of $c$ in fig 4.
+\end{soln*}
+%%% PROBLEM 3
+\begin{prob} Least-squares on larger data set.
+
+    \begin{itemize}
+    \item Discuss implemenation, file names.
+    \item Show the equations
+        \[
+            \leftarrow \textbf{equations go he go he go he go he go he go he go he go here}. \rightarrow
+        \]
+    \item Point to Figure 5.
+    \item Do the prediction, (part (c)).
+    \end{itemize}
+
+\end{prob}
+%%% PROBLEM 4
+\begin{prob} B-splines.
+    \begin{itemize}
+        \item Describe theory briefly, just like the setup (do this last)
+        \item Reproduce "mystery table" i guess
+        \item Discuss implementation briefly (especially pre-parametrized blending functions).
+        \item It is a puppy.
+    \end{itemize}
+\end{prob}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{figure}[p]
+    \begin{center}
+        \includegraphics[width=0.8\textwidth]{p1_2}
+        \caption{Least squares polynomial degree (2)}
+    \end{center}
+\end{figure}
+
+\begin{figure}[p]
+    \begin{center}
+        \includegraphics[width=0.8\textwidth]{p1_3}
+        \caption{Least squares polynomial degree (3)}
+    \end{center}
+\end{figure}
+
+\begin{figure}[p]
+    \begin{center}
+        \includegraphics[width=0.8\textwidth]{p1_exp}
+        \caption{Least squares (exponential form)}
+    \end{center}
+\end{figure}
+
+\begin{figure}[p]
     \begin{center}
     \includegraphics[width=.8\textwidth]{cardinals}
     \caption{Graphing the blending functions of the cardinal spline for several values of $c$.}
     \end{center}
 \end{figure}
-\end{soln*}
-%%% PROBLEM 3
-\begin{prob}
-    Least squares line
-    Least squares line
-    Least squares line
-    Least squares line
-    Least squares line
-    Least squares line
-    Least squares line
-    \begin{figure}[p]
-        \begin{center}
-        \includegraphics[width=0.6\textwidth]{p3}
-    \caption{Problem 3: i graphed the stuff}
+
+\begin{figure}[p]
+    \begin{center}
+        \includegraphics[width=0.8\textwidth]{p3}
+        \caption{Problem 3: i graphed the stuff}
     \end{center}
-    \end{figure}
-\end{prob}
-%%% PROBLEM 4
-\begin{prob}
-    B-splines.
-    \begin{figure}[p]
-        \begin{center}
-        \includegraphics[width=0.8\textwidth]{doggy_splines}
-        \caption{B-spline fitting of the doggy-data in Table 3}
-    \end{center}
-    \end{figure}
-\end{prob}
+\end{figure}
+
+\begin{figure}[p]
+    \begin{center}
+    \includegraphics[width=0.8\textwidth]{doggy_splines}
+    \caption{B-spline fitting of the doggy-data in Table 3}
+\end{center}
+\end{figure}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \end{document}
