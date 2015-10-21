@@ -165,29 +165,35 @@
 
 %%% PROBLEM 1
 \begin{prob}
-    Least squares polynomial of degree $\leq n$, $p(x) = \sum_{k=0}^n a_k x^k$
-    with $m>n$ data points given by
-
-    \[      \mathbb{X}^T\mathbb{X}\, \bm{a} = \mathbb{X}^T \bm{y}
+    A least squares polynomial of degree $\leq n$ is some $p_n(x) = \sum_{k=0}^n a_k x^k$
+    is one that minimizes the least-squared error
+    $E_2(\bm{a}) := \sum_{i=1}^{m}\left[p_n(x_i) - y_i\right]^2$
+    for some $m \geq n+1$ data points $(x_i, y_i)$.  
+    This optimal solution is found in terms of the coefficients
+    $\bm{a} := (a_i) \in \R^{(n+1) \times 1}$ by solving the normal equation
+    \[      
+            \mathbb{X}^T\mathbb{X}\, \bm{a} = \mathbb{X}^T \bm{y}
     \]
     where \[
             \mathbb{X} := \begin{bmatrix}
                 \uparrow & \uparrow & \uparrow &    & \uparrow \\
             1       & x_i & (x_i)^2 & \cdots & (x_i)^n      \\\
             \downarrow & \downarrow & \downarrow &  & \downarrow 
-            \end{bmatrix}
+            \end{bmatrix}_{(m \times (n+1))} , \quad
+        \bm{y} := \begin{bmatrix}\mcol{y_i}\end{bmatrix}_{(m \times 1)}
 \]
-In particular, we consider the following data ($m=4$):
+We demonstrate this solution method by finding several least squares approximations of the
+following data ($m=4$):
     \begin{center}
         \begin{tabular}{c c c c c}
         \hline
         $x_i$ & 1.0 & 1.1 & 1.3 & 1.5 \\
         $y_i$ & 1.84 & 1.96 & 2.21 & 2.45\\
         \hline
-        \end{tabular}
+    \end{tabular} 
     \end{center}
 \begin{enumerate}[\bfseries(a)]
-\item $n=2$: We find a 
+\item $n=2$: We find 
     \[
             \mathbb{X} = \begin{pmatrix}
                 1 & 1.0 & (1.0)^2 \\
@@ -219,30 +225,50 @@ In particular, we consider the following data ($m=4$):
         = \mathbb{X}^T \bm{y}
     \]
 
-    whose solution (Gaussian elimination or whatever) is
-    $\bm{a} = \begin{bmatrix} 0.55253769  & 1.32751256 & -0.04145729\end{bmatrix}^T$
+    whose solution (by Gaussian elimination or what-have-you) is
+    $\bm{a} = \begin{bmatrix} 0.55253769  & 1.32751256 & -0.04145729\end{bmatrix}^T$,
     corresponding to the polynomial
     \[
             \boxed{y = p_2(x) := 0.55253769 + 1.32751256 \,x - 0.04145729\, x^2}
         \]
-        with least squares error
+        This polynomial is plotted along with the the control points $(x_i, y_i)$
+        in \textbf{Figure 1}.
+        The associated error is
         $E_2(\bm{a}) = \sum_{i=1}^m \left[\, p_2(x_i) - y_i\, \right]^2 = 1.23115577889\mathsf{e}-5$.
-        See figure 1. 
 \item $n=3$:
-    Setting $\frac{\partial E_2(a_0, \ldots , a_3)}{\partial a_i} = 0$ for each $i$
-    results in the system
-\[
-\begin{bmatrix}
-    4          & \sum (x_i)   & \sum x_i^2 & \sum x_i^3 \\
-    \sum x_i   & \sum (x_i)^2 & \sum x_i^3 & \sum x_i^4 \\
-    \sum x_i^2 & \sum (x_i)^3 & \sum x_i^4 & \sum x_i^5 \\
-    \sum x_i^3 & \sum (x_i)^4 & \sum x_i^5 & \sum x_i^6 \\
-\end{bmatrix}
-\begin{bmatrix} a_0 \\ a_1 \\ a_2 \\ a_3 \end{bmatrix}
-=
-\begin{bmatrix} \sum y_i \\ \sum y_i x_i \\ \sum y_i x_i^2 \\ \sum y_i x_i^3 \end{bmatrix}
-\]
-Substituting in the values from Table 1, we have
+    Similarly, we obtain 
+    \[
+            \mathbb{X} = \begin{pmatrix}
+                1 & 1.0 & (1.0)^2  & (1.0)^3\\
+                1 & (1.1) & (1.1)^2 & (1.1)^3\\
+                1 & (1.3) & (1.3)^2 & (1.3)^3\\
+                1 & (1.5) & (1.5)^2 & (1.5)^3\\
+            \end{pmatrix}
+            \quad \Longrightarrow \quad
+            \mathbb{X}^T\mathbb{X} = 
+        \begin{pmatrix}
+        4.      &   4.9     &   6.15    &   7.903   \\
+        4.9     &   6.15    &   7.903   &  10.3827  \\
+        6.15    &   7.903   &  10.3827  &  13.91719 \\
+        7.903   &  10.3827  &  13.91719 &  18.988995
+        \end{pmatrix}
+            \]
+    \[
+        \mathbb{X}^T \bm{y} = \mathbb{X}^T \begin{bmatrix} 1.84 \\ 1.96 \\ 2.21 \\ 2.45 \end{bmatrix}
+        = \begin{pmatrix}8.46 \\  10.544 \\  13.459 \\ 17.57288 \end{pmatrix}
+        \]
+%\[
+%   \begin{bmatrix}
+%       4          & \sum (x_i)   & \sum x_i^2 & \sum x_i^3 \\
+%       \sum x_i   & \sum (x_i)^2 & \sum x_i^3 & \sum x_i^4 \\
+%       \sum x_i^2 & \sum (x_i)^3 & \sum x_i^4 & \sum x_i^5 \\
+%       \sum x_i^3 & \sum (x_i)^4 & \sum x_i^5 & \sum x_i^6 \\
+%   \end{bmatrix}
+%   \begin{bmatrix} a_0 \\ a_1 \\ a_2 \\ a_3 \end{bmatrix}
+%   =
+%   \begin{bmatrix} \sum y_i \\ \sum y_i x_i \\ \sum y_i x_i^2 \\ \sum y_i x_i^3 \end{bmatrix}
+%   \]
+        And so we have the system
 \[
 \begin{pmatrix}
 4.      &   4.9     &   6.15    &   7.903   \\
@@ -257,13 +283,13 @@ whose solution is
 $\bm{a} = \begin{bmatrix} 1.6575 & -1.38416667 & 2.15 & -0.58333333 \end{bmatrix}^T$. Thus
 the least-squares polynomial of degree 3 is
 \[
-        \boxed{y = p_3(x) = 1.6575  - 1.38416667 x + 2.15 x^2  - 0.58333333 x^3}
+        \boxed{y = p_3(x) := 1.6575  - 1.38416667 x + 2.15 x^2  - 0.58333333 x^3}
 \]
         with least squares error
         $E_2(\bm{a}) = \sum_{i=1}^m \left[\, p_2(x_i) - y_i\, \right]^2 =
-        E_2(\bm{a})= 8.75706449435 \mathsf{e}-24$.
-    See figure 2 below.
-\item   $y= bx^a$ form:
+            = 8.757064 \mathsf{e}-24$.
+            We plot this polynomial with the control points $(x_i, y_i)$
+            in \textbf{Figure 2} below.  \item   $y= bx^a$ form:
     Solving the equations $\frac{\partial E_2}{\partial a} = 0 , \frac{\partial E_2}{\partial b} = 0$
     involves a nasty system of nonlinear equations, so we search for the
     linearized form of our target equation. \textbf{Continue the mild derivation.}
@@ -299,17 +325,18 @@ the least-squares polynomial of degree 3 is
     We formulate a sequence of cardinal splines for some control points
     $\{P_k\}_{k=1}^{N} \subset \R^3$ and
     a fixed tension parameter $c \in {[0,1)}$. For $ 1 < k < N-1$,
-        our goal is to create a spline $\bm{p}_k(t)$ satisfying the following: 
+        our goal is to create a spline $\bm{p}_k(t)$ between the points
+        $P_k$ and $P_{k+1}$ satisfying the following: 
     \begin{gather*}
     \bm{p}_k: {[0,1]} \rightarrow \R^3 \quad \st \quad
     \bm{p}_k(0) = P_k , \; \bm{p}_k(1) = P_{k+1} , \\
     \bm{p}'(0) = m_k = \frac{1}{2}(1-c)\left(P_{k+1} - P_{k-1}\right) \quad
     \bm{p}'(1) = m_{k+1} = \frac{1}{2}(1-c)\left(P_{k+2} - P_{k}\right) 
     \end{gather*}
-    Thus, each $\bm{p}_k(t)$ is specified by the geometry
+    From these contraints we see that each $\bm{p}_k(t)$ is specified by the geometry
     $G_C := \begin{bmatrix} P_{k-1} & P_k & P_{k+1} & P_{k+2} \end{bmatrix}^T$.
     Using the conditions above, we can readily convert between the geometries
-    of Hermite/cardinal via
+    of Hermite/cardinal by the defining the matrix $M_{HC}$, where
     \[
             \underbrace{\begin{bmatrix}
                 0 & 1 & 0 & 0 \\
@@ -327,13 +354,14 @@ the least-squares polynomial of degree 3 is
                 \bm{p}(0) \\ \bm{p}(1) \\ \bm{p}'(0) \\ \bm{p}'(1)
         \end{bmatrix}}_{G_H}
         \]
-    We substitute $G_H = M_{HC} G_C$ directly into the solution for Hermite curves:
+    We substitute $G_H = M_{HC} G_C$ directly into the solution for Hermite curves, defining a
+    $M_C := M_H M_{HC}$:
     \[
             \bm{p}_k(t) = \bm{t}^T C = \bm{t}^T M_H G_H = \bm{t}^T M_H (M_{HC} G_C )
                         = \bm{t}^T M_C G_C 
                         = (M_C^T \bm{t})^T \cdot G_C
         \]
-        where we define $M_C := M_H M_{HC}$. Solving,
+        Explicitly, this $M_C$ becomes
     \begin{align*}
             M_C := M_H M_{HC}
             &= \begin{bmatrix}
@@ -382,48 +410,61 @@ the least-squares polynomial of degree 3 is
             \end{matrix}
     \end{align*}
 
-We plot these blending functions for several values of $c$ in fig 4.
+    We plot these general blending functions over the interval $t\in[0,1]$ for several values
+    of $c$ in \textbf{Figure 4} below.
 \end{soln*}
 \hrulefill
+
 %%% PROBLEM 3
 \begin{prob} Least-squares on larger data set.
 
-
+Here's some output
 \begin{verbatim}
 wukm@zoo ~/573/hw3 (git)-[master] % python p3.py
 line coefficients: [-0.80283142  0.22334848]
-p_1(90)= 19.298531812
-p_1(60)= 12.5980774024
 linear error =  6153.81704917
 exp. coefficients, a=0.8139010446670706, b=0.6284427563244188
-p_e(90)= 24.4808078266
-p_e(60)= 17.599684601
 exponential error =  6363.48808059
 \end{verbatim}
 
+Least-squares line given by
+    \[
+            y = p_1(x) := (-0.80283142) + (0.22334848)\,x
+    \]
+
+And $y=bx^a$ form given by
+    \[
+            y = q(x) := 0.62844 \cdot x^{0.81390}
+        \]
+
 \subsection*{TODO}
     \begin{itemize}
-    \item Discuss implemenation, file names.
-    \item Show the equations
-        \[
-            \leftarrow \textbf{equations go he go he go he go he go he go he go he go here}. \rightarrow
-        \]
-    \item Point to Figure 5.
-    \item Do the prediction, (part (c)).
+    \item Discuss implementation, file names.
+    \item Do the prediction stuff in part \textbf{(c)}.
+    \item Errors of each
+    \item Point to \textbf{Figure 5}.
+    \item They suck so much because the data doesn't really look correlated.
     \end{itemize}
 \end{prob}
 
 \hrulefill
 
 %%% PROBLEM 4
-\begin{prob} B-splines.
+\begin{prob} B-splines on a ``mystery data set''
+
+    Refer to \textbf{Figure 6} for a plot sequence of b-splines obtained from
+    a ``mystery'' data set (refer to HW).
+    Notice that the last three data points are identical to the first four,
+    so that $p_{-1}(1) = p_1(0)$ and the splines connect in a loop.
+    Upon examining the resulting graph, it appears these data points have been
+    carefully chosen so that their b-splines connect in the whimsical shape of a
+    puppy (perhaps wearing a hat).
     
     \subsection*{TODO}
     \begin{itemize}
         \item Describe theory briefly, just like the setup (do this last)
         \item Discuss implementation briefly (especially pre-parametrized blending functions).
         \item Reproduce "mystery table" I guess?
-        \item Hey look, it's a puppy.
     \end{itemize}
 
 \end{prob}
