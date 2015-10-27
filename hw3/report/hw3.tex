@@ -24,6 +24,39 @@
 %\usepackage[dvips,bookmarks,bookmarksopen,backref,colorlinks,linkcolor={blue},citecolor={blue},urlcolor={blue}](hyperref}
 
 
+\usepackage{color}
+
+\definecolor{mygreen}{rgb}{0,0.6,0}
+\definecolor{mygray}{rgb}{0.5,0.5,0.5}
+\definecolor{mymauve}{rgb}{0.58,0,0.82}
+
+\lstset{ %
+  backgroundcolor=\color{white},   % choose the background color; you must add \usepackage{color} or \usepackage{xcolor}
+  basicstyle=\footnotesize,        % the size of the fonts that are used for the code
+  breakatwhitespace=false,         % sets if automatic breaks should only happen at whitespace
+  breaklines=true,                 % sets automatic line breaking
+  captionpos=b,                    % sets the caption-position to bottom
+  commentstyle=\color{mygreen},    % comment style
+  deletekeywords={...},            % if you want to delete keywords from the given language
+  escapeinside={\%*}{*)},          % if you want to add LaTeX within your code
+  extendedchars=true,              % lets you use non-ASCII characters; for 8-bits encodings only, does not work with UTF-8
+  frame=single,	                   % adds a frame around the code
+  keepspaces=true,                 % keeps spaces in text, useful for keeping indentation of code (possibly needs columns=flexible)
+  keywordstyle=\color{blue},       % keyword style
+  language=Python,                 % the language of the code
+  otherkeywords={*,...},           % if you want to add more keywords to the set
+  numbers=left,                    % where to put the line-numbers; possible values are (none, left, right)
+  numbersep=5pt,                   % how far the line-numbers are from the code
+  numberstyle=\tiny\color{mygray}, % the style that is used for the line-numbers
+  rulecolor=\color{black},         % if not set, the frame-color may be changed on line-breaks within not-black text (e.g. comments (green here))
+  showspaces=false,                % show spaces everywhere adding particular underscores; it overrides 'showstringspaces'
+  showstringspaces=false,          % underline spaces within strings only
+  showtabs=false,                  % show tabs within strings adding particular underscores
+  stepnumber=2,                    % the step between two line-numbers. If it's 1, each line will be numbered
+  stringstyle=\color{mymauve},     % string literal style
+  tabsize=2,	                   % sets default tabsize to 2 spaces
+  title=\lstname                   % show the filename of files included with \lstinputlisting; also try caption instead of title
+}
 % change up the fonts (pick one only)
 %\usepackage{times}%
 \usepackage{helvet}%
@@ -162,6 +195,7 @@
 \author{Luke Wukmer}
 \date{Fall 2015}
 \maketitle \thispagestyle{empty} % remove the page number from the first page
+\lstset{language=Python}
 
 %%% PROBLEM 1
 \begin{prob}
@@ -287,7 +321,7 @@ the least-squares polynomial of degree 3 is
 \]
         with least squares error
         $E_2(\bm{a}) = \sum_{i=1}^m \left[\, p_2(x_i) - y_i\, \right]^2 =
-            = 8.757064 \mathsf{e}-24$.
+            8.757064 \mathsf{e}-24$.
             We plot this polynomial with the control points $(x_i, y_i)$
             in \textbf{Figure 2} below.  \item   $y= bx^a$ form:
     Solving the equations $\frac{\partial E_2}{\partial a} = 0 , \frac{\partial E_2}{\partial b} = 0$
@@ -416,9 +450,9 @@ the least-squares polynomial of degree 3 is
 \hrulefill
 
 %%% PROBLEM 3
-\begin{prob} Least-squares on larger data set.
+\begin{prob} \textit{Least-squares on a larger data set}
 
-Here's some output
+    Running the file \texttt{p3.py} yields the following output:
 \begin{verbatim}
 wukm@zoo ~/573/hw3 (git)-[master] % python p3.py
 line coefficients: [-0.80283142  0.22334848]
@@ -427,45 +461,61 @@ exp. coefficients, a=0.8139010446670706, b=0.6284427563244188
 exponential error =  6363.48808059
 \end{verbatim}
 
-Least-squares line given by
+This program uses the least-squares solving implementation found in 
+\texttt{least\_squares.py} to find a linear fit and a fit of the form
+$y=bx^a$ for the data in \textbf{Table 2} (refer to HW).
+This output indidicates that the least-squares line is given by the form
     \[
             y = p_1(x) := (-0.80283142) + (0.22334848)\,x
     \]
 
-And $y=bx^a$ form given by
+with error $E_2 = 6153.82$. Solving for $y$ here yields the predicted HW scores for
+a student receiving a $60\%$ and a $90\%$ on the final, respectively:
+$(272.6,60), (406.6,90)$.
+
+Similarly, the $y=bx^a$ form given by
     \[
             y = q(x) := 0.62844 \cdot x^{0.81390}
         \]
 
-\subsection*{TODO}
-    \begin{itemize}
-    \item Discuss implementation, file names.
-    \item Do the prediction stuff in part \textbf{(c)}.
-    \item Errors of each
-    \item Point to \textbf{Figure 5}.
-    \item They suck so much because the data doesn't really look correlated.
-    \end{itemize}
+with error $E_2 = 6363.5$. Solving for $y$ here yields the predicted HW scores for
+a student receiving a $60\%$ and a $90\%$ on the final, respectively:
+$(270.8,60), (445.6,90)$.
+
+These equations along with the dataset itself are plotted in \textbf{Figure 5}.
+Visually, these two forms do not seem to fit the data well
+(which corresponds to the large errors obtained for each form).
+This large error seems unavoidable. Indeed, we do not intuitively expect there to be a strong,
+predictable pattern between HW and exam scores.
+
 \end{prob}
 
 \hrulefill
 
 %%% PROBLEM 4
-\begin{prob} B-splines on a ``mystery data set''
+\begin{prob} \textit{B-splines on a ``mystery'' data set}
 
     Refer to \textbf{Figure 6} for a plot sequence of b-splines obtained from
     a ``mystery'' data set (refer to HW).
-    Notice that the last three data points are identical to the first four,
+    Notice that the last three data points are identical to the first three,
     so that $p_{-1}(1) = p_1(0)$ and the splines connect in a loop.
     Upon examining the resulting graph, it appears these data points have been
     carefully chosen so that their b-splines connect in the whimsical shape of a
-    puppy (perhaps wearing a hat).
-    
-    \subsection*{TODO}
-    \begin{itemize}
-        \item Describe theory briefly, just like the setup (do this last)
-        \item Discuss implementation briefly (especially pre-parametrized blending functions).
-        \item Reproduce "mystery table" I guess?
-    \end{itemize}
+    puppy.
+
+    For each sequential group of four data points $P_{i}, P_{i+1}, P_{i+2}, P_{i+3}$,
+    we apply the b-spline blending functions $\bm{b}(t)$,
+    which are given in the function \texttt{blending\_mesh()} in \texttt{bsplines.py}:
+    \lstinputlisting[firstline=9]{../bspline.py}
+     
+    Since we must graph the polynomial using some mesh of $[0,1]$,
+    we find it is actually more convenient to apply these blending functions to the mesh directly.
+    The result, when dotted with $[P_{i}, P_{i+1}, P_{i+2}, P_{i+3}]$, returns the interpolation points
+    of the graphed polynomial itself.
+
+    These functions are used to produce the graph seen in \textbf{Figure 6}:
+
+    \lstinputlisting[firstline=26, lastline=38]{luke_Wukmer_HW3_Prob4.py}
 
 \end{prob}
 
@@ -474,21 +524,21 @@ And $y=bx^a$ form given by
 \begin{figure}[p]
     \begin{center}
         \includegraphics[width=0.8\textwidth]{p1_2}
-        \caption{Least squares polynomial degree (2)}
+        \caption{Least squares polynomial degree (2) from \textbf{Problem 1(a)}}
     \end{center}
 \end{figure}
 
 \begin{figure}[p]
     \begin{center}
         \includegraphics[width=0.8\textwidth]{p1_3}
-        \caption{Least squares polynomial degree (3)}
+        \caption{Least squares polynomial degree (3) from \textbf{Problem 1(b)}}
     \end{center}
 \end{figure}
 
 \begin{figure}[p]
     \begin{center}
         \includegraphics[width=0.8\textwidth]{p1_exp}
-        \caption{Least squares (exponential form)}
+        \caption{Least squares (exponential form) from \textbf{Problem 1(c)}}
     \end{center}
 \end{figure}
 
@@ -502,14 +552,15 @@ And $y=bx^a$ form given by
 \begin{figure}[p]
     \begin{center}
         \includegraphics[width=0.8\textwidth]{p3}
-        \caption{Problem 3: i graphed the stuff}
+        \caption{Graph of the two least-square approximations in \textbf{Problem 3},
+        along with the corresponding dataset}
     \end{center}
 \end{figure}
 
 \begin{figure}[p]
     \begin{center}
     \includegraphics[width=0.8\textwidth]{doggy_splines}
-    \caption{B-spline fitting of the doggy-data in Table 3}
+    \caption{B-spline fitting of the doggy-data (see \textbf{Problem 4})}
 \end{center}
 \end{figure}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
