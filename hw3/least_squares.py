@@ -39,39 +39,6 @@ def poly_lsq(data, n):
     a = a.flatten() # i don't need the shape anymore, want easy iteration
     return a
 
-def _alt_lsq(data, degree):
-    """
-    deprecated.
-
-    least squares interpolating of the 2D data
-    with a polynomial of given degree
-
-    returns the coefficients a_0 , ..., a_{n+1}
-    """
-    
-    # make sure size is right first
-    d = np.array(data).reshape((2,-1))
-
-    # conveniences
-    n, m = degree, d.shape[1]
-    X, Y = d
-    
-    # initialize 
-    M = np.empty((n+1,n+1))
-    b = np.empty((n+1,1))
-
-    # populate these in a boring way
-    for i in range(n+1):
-        M[i] = [sum(X**(i+j)) for j in range(n+1)]
-        b[i] = sum(Y*X**i) 
-
-    #print("degree", degree, '\t'+'_'*30)  
-    #print('M=\n',M)
-    #print('b=\n',b)
-
-    a = solve(M,b)
-    
-    return a
 
 def exponential_lsq(data):
     """

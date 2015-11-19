@@ -1,10 +1,6 @@
 #!/usr/bin/env python3
 
-'''
-should be luke_Wukmer_Prob4.py
-'''
-
-from bspline import blending_mesh
+from bspline import blending_mesh, b_splines
 import numpy as np
 import matplotlib.pyplot as plt
 
@@ -23,8 +19,6 @@ table_y = """ 256 211 228 198 161 103 73 35 9 0
 data = [(float(x), float(y)) for x, y in zip(table_x.split(), table_y.split())]
 
 P = np.array(data)
-N = P.shape[0] # as a convenience
-# by the way, to show a 2xN array like this, do plt.scatter(*P.T)
 
 if __name__ == "__main__":
     
@@ -37,9 +31,8 @@ if __name__ == "__main__":
    
     B = blending_mesh() # it's constant!!!
 
-    for k in range(N-3):
-        g = B @ P[k:k+4]
-        ax.plot(*g.T)
-
+    # iterate over {P[i],P[i+1],P[i+2],P[i+3]} via a generator
+    for spline in b_splines(P):
+        ax.plot(*spline.T)
 
     fig.savefig('report/doggy_splines.png')

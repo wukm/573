@@ -452,7 +452,8 @@ the least-squares polynomial of degree 3 is
 %%% PROBLEM 3
 \begin{prob} \textit{Least-squares on a larger data set}
 
-    Running the file \texttt{p3.py} yields the following output:
+    Running the file \texttt{p3.py} (renamed \texttt{luke\_Wukmer\_HW3\_Prob3.py} in the submitted material)
+    yields the following output:
 \begin{verbatim}
 wukm@zoo ~/573/hw3 (git)-[master] % python p3.py
 line coefficients: [-0.80283142  0.22334848]
@@ -498,7 +499,8 @@ predictable pattern between HW and exam scores.
     Refer to \textbf{Figure 6} for a plot sequence of b-splines obtained from
     a ``mystery'' data set (refer to HW).
     Notice that the last three data points are identical to the first three,
-    so that $p_{-1}(1) = p_1(0)$ and the splines connect in a loop.
+    so that $p_{N-1}(1) = p_1(0)$ and the splines connect in a loop
+    (where $N$ is the size of the data set).
     Upon examining the resulting graph, it appears these data points have been
     carefully chosen so that their b-splines connect in the whimsical shape of a
     puppy.
