@@ -240,20 +240,48 @@
 
 \hrulefill
 
+%%%% PROBLEM 2
 \begin{prob}
     Prove that for any $N$,
     \[
             \int_{-\pi}^0  D_N(\omega) d\omega
-        =   \int_{0}^{pi}  D_N(\omega) d\omega = \frac{1}{2}
+        =   \int_{0}^{\pi}  D_N(\omega) d\omega = \frac{1}{2}
     \]
     where $D_N(\omega)$ is the $N^{\text{th}}$ Dirichlet kernel,
     $\displaystyle D_N(\omega) = \frac{1}{2\pi}\sum_{-N}^N e^{inw}$\,\,.
 \end{prob}
 \begin{soln*}
-    If  $N = 0$, we have $\displaystyle D_0(\omega) = \frac{1}{2\pi}$
+    %If  $N = 0$, we have $\displaystyle D_0(\omega) = \frac{1}{2\pi}$.
+    Suppose $N\neq 0$. Then, by reorganizing,
     \begin{align*}
+        \int_0^\pi D_N(\omega)d\omega &=
+        \frac{1}{2\pi} \int_0^\pi \sum_{n=1}^{|N|}\left[
+        e^{in\omega} + e^{-in\omega}\right] d\omega + \frac{1}{2\pi}\int_0^\pi e^{i(0)\omega} d\omega \\
+        &= \frac{1}{2\pi} \sum_{n=1}^{|N|}\int_0^\pi \left[
+        e^{in\omega} + e^{-in\omega}\right] d\omega + \frac{1}{2\pi}\int_0^\pi d\omega \\
+        &= \frac{1}{2\pi} \sum_{n=1}^{|N|}
+            \left[ \frac{1}{in} e^{in\omega} -\frac{1}{in} e^{-in\omega}\right]_0^\pi
+            + \frac{1}{2} \\ 
+        &= \frac{1}{2\pi} \sum_{n=1}^{|N|}
+            \left[ \frac{1}{in}\left(
+            \left(e^{i\pi}\right)^n - \left(e^{i\pi}\right)^{-n} - 1 + 1
+        \right)\right] + \frac{1}{2}\\
+        &= \frac{1}{2\pi} \sum_{n=1}^{|N|}
+        \left[ \frac{1}{in}\left( (-1)^n - (-1)^{-n}\right)\right] + \frac{1}{2} 
+        \,=\, 0 + \frac{1}{2} \,=\, \frac{1}{2}
     \end{align*}
+    From this derivation we can also see that if $N=0$, the first term is nonexistent, and thus
+    $\int_0^\pi D_0(\omega) d\omega = \frac{1}{2}$ as well.
+
+    Finally, to show $\int_{-\pi}^0  D_N(\omega) d\omega =   \int_{0}^{\pi}  D_N(\omega) d\omega$,
+    note that $\int_{-\pi}^{0} D_N(\omega) d\omega = \int_0^\pi D_N(-\omega) d\omega$.
+    The first term is simply reordered and still cancels out, whereas the second term is unaffected,
+    and we have the result.
+    \qed
 \end{soln*}
+
+%%%% PROBLEM 3
+
 \end{document}
 %%%% PROBLEM 1
 %\begin{prob}
