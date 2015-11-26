@@ -6,6 +6,10 @@ __pycache__/
 
 # no hw pdfs, textbooks, etc
 spec/
+
+# vim specific stuff
+**/*.swp
+
 # no latex compiling stuff
 **/report/*.log
 **/report/*.fls
