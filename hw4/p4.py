@@ -115,24 +115,31 @@ if __name__ == "__main__":
 
     img_raw = PIL.Image.open('./lena_noisy')
 
-    img_raw = img_raw.convert('L') # convert to grayscale, all channels are equal
+    # convert to grayscale, all channels are equal (should verify?)
+    img_raw = img_raw.convert('L')
     img = np.array(img_raw, dtype='f')
 
     fs = fft2(img)
     fss = fftshift(fs)
+
     g_kern, g_mesh = gaussian_filter(img.shape, sigma=15)
 
+    # g_kern is centered, so use shifted FT of image
     convolute = g_kern * fss
+
+    # shift back and reverse transform
     filtered = ifft2(ifftshift(convolute))
+
+
+    # actually, any nonreal components must be from roundoff
+    f_img = filtered.real
 
     print('imaginary error accumulated:')
     print('\t np.abs(filtered.imag).max()=', np.abs(filtered.imag).max())
-    f_img = filtered.real
+    
+    img_spectrum = np.log10(np.abs(fss))
 
-    # actually, any nonreal components must be from roundoff
-    mag = np.log10(np.abs(fss))
-
-    mag2 = np.log10(np.abs(convolute))
+    fimg_spectrum = np.log10(np.abs(convolute))
 
     # make a 2x2 plot and give all the subaxes names for ease
 
@@ -140,8 +147,10 @@ if __name__ == "__main__":
 
 
     ax1.imshow(img, cmap=cm.Greys_r)
-    ax2.imshow(mag) # default (nongrey) colormap is actualy easier to see
-    ax3.imshow(mag2)
+
+    # default (nongrey) colormap is actualy easier to see
+    ax2.imshow(img_spectrum)
+    ax3.imshow(conv_spectrum)
     ax4.imshow(f_img, cmap=cm.Greys_r)
 
     fig.show()
