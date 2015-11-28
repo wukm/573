@@ -112,8 +112,8 @@ def gaussian_filter(shape, sigma):
 
 
 if __name__ == "__main__":
-
-    img_raw = PIL.Image.open('./lena_noisy')
+    
+    img_raw = PIL.Image.open('./lena_noisy.png')
 
     # convert to grayscale, all channels are equal (should verify?)
     img_raw = img_raw.convert('L')
