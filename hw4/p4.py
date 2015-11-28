@@ -113,68 +113,87 @@ def gaussian_filter(shape, sigma):
 
 if __name__ == "__main__":
     
+    plt.style.use('seaborn-paper')
+    plt.set_cmap('viridis')
+    
     img_raw = PIL.Image.open('./lena_noisy.png')
 
-    # convert to grayscale, all channels are equal (should verify?)
-    img_raw = img_raw.convert('L')
     img = np.array(img_raw, dtype='f')
 
-    fs = fft2(img)
-    fss = fftshift(fs)
+    # convert image to greyscale if it's 3 channels, else stop.
+    if img.ndim == 3 and img.shape[-1] == 3:
+        # all three channels are equal
+        if (img[:,:,0] == img[:,:,1]).all() and (img[:,:,1] == img[:,:,2]).all():
+            img = img[:,:,0] # keep only one
+        else:
+            raise Exception("cannot convert to single channel")
 
+    elif img.ndim == 1:
+        pass # one channel, so we're fine
+    else:
+        raise Exception("cannot handle this image.")
+
+    fs = fft2(img) # 2D fourier transform of the image
+    fss = fftshift(fs) # shift low frequency stuff to center
+    
+    # create discrete gaussian filter
     g_kern, g_mesh = gaussian_filter(img.shape, sigma=15)
 
     # g_kern is centered, so use shifted FT of image
     convolute = g_kern * fss
 
-    # shift back and reverse transform
+    # shift back and reverse transform to get the filtered image
     filtered = ifft2(ifftshift(convolute))
-
 
     # actually, any nonreal components must be from roundoff
     f_img = filtered.real
 
-    print('imaginary error accumulated:')
+    print('max bound on imaginary error:')
     print('\t np.abs(filtered.imag).max()=', np.abs(filtered.imag).max())
     
+    # create fourier spectra to view as images
     img_spectrum = np.log10(np.abs(fss))
+    conv_spectrum = np.log10(np.abs(convolute))
 
-    fimg_spectrum = np.log10(np.abs(convolute))
-
-    # make a 2x2 plot and give all the subaxes names for ease
-
-    fig, ((ax1, ax2), (ax3, ax4)) = plt.subplots(2,2)
-
-
-    ax1.imshow(img, cmap=cm.Greys_r)
+    # plot these
+    fig, ax = plt.subplots(2,2)
+    ax[0,0].imshow(img, cmap='gray')
+    ax[0,0].set_title('(a)', fontsize='large')
 
     # default (nongrey) colormap is actualy easier to see
-    ax2.imshow(img_spectrum)
-    ax3.imshow(conv_spectrum)
-    ax4.imshow(f_img, cmap=cm.Greys_r)
+    ax[0,1].imshow(img_spectrum)
+    ax[0,1].set_title('(b)', fontsize='large')
 
+    ax[1,0].imshow(conv_spectrum)
+    ax[1,0].set_title('(c)', fontsize='large')
+
+    ax[1,1].imshow(f_img, cmap='gray')
+    ax[1,1].set_title('(d)', fontsize='large')
+    
     fig.show()
+    # EXTRANEOUS ______________________________
+    # plot gaussian used
 
     fig2 = plt.figure()
-    bx1 = fig2.add_subplot(221, projection='3d')
-    bx1.plot_surface(g_mesh[0], g_mesh[1], g_kern)
+    ax2 = fig2.gca(projection='3d')
+    ax2.plot_surface(g_mesh[0], g_mesh[1], g_kern)
+    ax2.set_alpha(0)
+    fig2.savefig('p4-gaussian15.png')
 
-    bx2 = fig2.add_subplot(222)
+    #bx2 = fig2.add_subplot(222)
 
-    bx2.imshow(g_kern)
+    #bx2.imshow(g_kern)
 
-    bx3 = fig2.add_subplot(223)
-    bx4 = fig2.add_subplot(224)
+    #bx3 = fig2.add_subplot(223)
+    #bx4 = fig2.add_subplot(224)
 
 
-    # make histograms of the cropped region for the original image and the result
-    S = crop_range(img)
-    img_crop = img[S].round()
-    filtered_crop = f_img[S].round()
+    ## make histograms of the cropped region for the original image and the result
+    #S = crop_range(img)
+    #img_crop = img[S].round()
+    #filtered_crop = f_img[S].round()
 
-    orig = np.histogram(img_crop.flatten(), bins=256)[0]
-    filt = np.histogram(filtered_crop.flatten(), bins=256)[0]
-    bx3.bar(range(256), orig)
-    bx4.bar(range(256), filt)
-
-    fig2.show()
+    #orig = np.histogram(img_crop.flatten(), bins=256)[0]
+    #filt = np.histogram(filtered_crop.flatten(), bins=256)[0]
+    #bx3.bar(range(256), orig)
+    #bx4.bar(range(256), filt)
