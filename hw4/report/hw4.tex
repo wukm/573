@@ -1,4 +1,4 @@
-% MATH 573 HW 3
+% MATH 573 HW 4
 % LUKE WUKMER
 
 \documentclass[10pt]{article}
@@ -260,7 +260,7 @@
                     \leq \frac{1}{2\pi} \int_{-\pi}^{\pi} | f(\omega) |^2 d\omega
                     =\frac{1}{2\pi} \int_{-\pi}^{\pi} \omega^2 \,d\omega = \cdots = \frac{\pi^2}{3}
                 \end{align*}
-            Then by theorem, $S_f^N \rightarrow f$. Flesh this out a bit more eh?
+            Then by the theorem, $S_f^N \rightarrow f$.
     \end{enumerate}
 \end{soln*}
 
@@ -336,12 +336,58 @@ Show that for any functions $f,g,h$ on $\R$, $f\star (g \star h) = (f\star g) \s
 
 %%%%PROBLEM 4
 \begin{prob}[Linear filtering for image denoising]
-    Add this.
+    Refer to Figures 1--4 and the relevant code.
+     
+\begin{figure}[p]
+    \begin{center}
+        \includegraphics[width=0.8\textwidth]{prob4}
+        \caption{
+            \textbf{(a)} The original image.
+            \textbf{(b)} A logarithmic colormap of the (absolute value) of the fourier spectrum of the image.
+            \textbf{(c)} A discrete gaussian kernel with $\sigma=15$ is applied to the spectrum obtained in (b).
+            \textbf{(d)} The resulting filtered image, which is the inverse fourier transform of the spectrum
+                         represented in (c).
+                     }
+    \end{center}
+\end{figure}
+\begin{figure}[p]
+    \begin{center}
+        \includegraphics[width=0.8\textwidth]{p4-gaussian15}
+        \caption{A 3D representation of the Gaussian function (with $\sigma=15$) used to filter.}
+    \end{center}
+\end{figure}
+\begin{figure}[p]
+    \begin{center}
+        \includegraphics[width=0.8\textwidth]{varspread}
+        \caption{Least squares polynomial degree (2) from \textbf{Problem 1(a)}}
+    \end{center}
+\end{figure}
+
+\begin{figure}[p]
+    \begin{center}
+        \includegraphics[width=0.8\textwidth]{varspread-hists}
+        \caption{Histograms of a sample image \textsf{lena\_noisy.png} where }
+    \end{center}
+\end{figure}
+
 \end{prob}
 
 \hrulefill
 %%%%PROBLEM 5
 \begin{prob}[Hybrid images]
     Add this.
+\begin{figure}[p]
+    \begin{center}
+        \includegraphics[width=\textwidth]{prob5}
+        \caption{Hybrid pictures}
+    \end{center}
+\end{figure}
+
+\begin{figure}[p]
+    \begin{center}
+        \includegraphics[width=\textwidth]{earthblep}
+        \caption{Earth blep}
+    \end{center}
+\end{figure}
 \end{prob}
 \end{document}
