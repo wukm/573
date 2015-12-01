@@ -265,7 +265,7 @@
 \end{soln*}
 
 \hrulefill
-
+\newpage
 %%%% PROBLEM 2
 \begin{prob}
     Prove that for any $N$,
@@ -333,10 +333,13 @@ Show that for any functions $f,g,h$ on $\R$, $f\star (g \star h) = (f\star g) \s
 \end{soln*}
 
 \hrulefill
-
+\newpage
 %%%%PROBLEM 4
 \begin{prob}[Linear filtering for image denoising]
     Refer to Figures 1--4 and the relevant code.
+    \[
+        \tilde{g}_\sigma(x,y) = 1 - g_\sigma(x,y) = 1 - e^{-\frac{(x-a)^2 + (y-b)^2}{2\sigma^2}}
+    \]
      
 \begin{figure}[p]
     \begin{center}
@@ -373,20 +376,53 @@ Show that for any functions $f,g,h$ on $\R$, $f\star (g \star h) = (f\star g) \s
 \end{prob}
 
 \hrulefill
+\newpage
 %%%%PROBLEM 5
 \begin{prob}[Hybrid images]
-    Add this.
-\begin{figure}[p]
+    In \texttt{hybrid.py}, we use the techniques developed in four to create \textit{hybrid images}.
+    These are images which incorporate the high frequency content of one image
+    with the low frequency content of another. In short, the gaussian filter used in 
+    \textbf{Problem 4} acts as a low-pass filter on the first image. A simple high-pass filter was created by
+    simply reversing the gaussian function on its range ${[0,1]}$:
+    \[
+            \tilde{g}_\sigma(x,y) = 1 - g_\sigma(x,y) = 1 - e^{-\frac{(x-a)^2 + (y-b)^2}{2\sigma^2}}
+        \]
+    By combining these two images, a resulting image is created that visually appears
+    similar to the low-passed image when viewed up close, and visually appears similar to the
+    low-passed image when viewed from far away. This phenomenon is demonstrated first in
+    \textbf{Figure 5}, where a hybrid image is created from well-known portraits of Albert
+    Einstein and Marilyn Monroe. The gaussian functions used both have variance $\sigma=10$, which 
+    was found empirically to best demonstrate this phenomenon.
+    
+    \textbf{Figure 6} demonstrates the
+    same phenomenon on a different set of images,
+    the iconic "Blue Marble" taken from Apollo 17 in 1972, and a cat. The gaussian function used here
+    has variance $\sigma=15$, again found empirically. The corresponding code (almost identical)
+    can be found in \texttt{hybrid\_alt.py}.
+    \begin{figure}[p]
     \begin{center}
         \includegraphics[width=\textwidth]{prob5}
-        \caption{Hybrid pictures}
+        \caption{
+        A demonstration of \textit{hybrid images}: The original images of Albert Einstein \textbf{(a)} and
+        Marilyn Monroe \textbf{(b)} are hybridized: In \textbf{(c)}, the high pass filter has been
+        applied to Marilyn, while a low pass filter has been applied to Albert.
+        In \textbf{(d)}, these filters are reversed. In all cases, the gaussian function in question
+        has variance $\sigma=10$, which was chosen empirically to best demonstrate this result.
+            }
     \end{center}
 \end{figure}
 
 \begin{figure}[p]
     \begin{center}
         \includegraphics[width=\textwidth]{earthblep}
-        \caption{Earth blep}
+        \caption{
+        Hybrid images were created in the same fashion as in \textit{Figure 5}
+        with two different initial images, a blep \textbf{(a)}, and the iconic picture
+        of planet earth \textbf{(b)}. \textbf{(c)} contains the high passed content on earth
+        (which can be seen from the clear outlines of the planet and its cloud layer),
+        while \textbf{(d)} contains the high-passed content of the cat (the clear outline of its eyes).
+        In this case, the gaussian function was chosen to have variance $\sigma=15$.
+    }
     \end{center}
 \end{figure}
 \end{prob}
