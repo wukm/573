@@ -70,17 +70,16 @@ def gaussian(point, sigma, center=None):
     with variance sigma and center a,b = center (defaults to (0,0))
     """
 
+    # default to center at (0,0) if not provided
     if center is not None:
         a, b = center
     else:
         a, b = 0, 0
 
-    x, y = point
-    res = (x-a)**2 + (y-b)**2
-    res = (-res)/(2*(sigma**2))
-    res = np.exp(res)
+    # the gaussian function
+    res = (-(x-a)**2 + (y-b)**2) / (2*(sigma**2))
 
-    return res
+    return np.exp(res)
 
 def gaussian_filter(shape, sigma):
     """
@@ -98,16 +97,20 @@ def gaussian_filter(shape, sigma):
 
     """
     
-    M, N = shape
+    M, N = shape # shape of original image
+
+    # make a meshgrid of integers [0,M]x[0,N]
     mesh_x = np.arange(M)
     mesh_y = np.arange(N)
-
     mesh = np.meshgrid(mesh_y, mesh_x)
-
+    
+    # result is a discrete gaussian filter ...
     g_kern = gaussian(mesh, sigma, center=(N/2, M/2))
 
+    # ... with the same shape as the original image
     assert g_kern.shape == shape
 
+    # return mesh for plotting
     return g_kern, mesh
 
 

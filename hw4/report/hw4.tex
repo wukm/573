@@ -259,6 +259,7 @@
                 \sum_{-\infty}^{\infty}|c_n|^2
                     \leq \frac{1}{2\pi} \int_{-\pi}^{\pi} | f(\omega) |^2 d\omega
                     =\frac{1}{2\pi} \int_{-\pi}^{\pi} \omega^2 \,d\omega = \cdots = \frac{\pi^2}{3}
+                    < \infty
                 \end{align*}
             Then by the theorem, $S_f^N \rightarrow f$.
     \end{enumerate}
@@ -336,12 +337,31 @@ Show that for any functions $f,g,h$ on $\R$, $f\star (g \star h) = (f\star g) \s
 \newpage
 %%%%PROBLEM 4
 \begin{prob}[Linear filtering for image denoising]
-    Refer to Figures 1--4 and the relevant code.
+    A program for denoising the image \texttt{lena\_noisy.png} was developed in \texttt{p4.py}
+    For this task, we employ a gaussian function
     \[
-        \tilde{g}_\sigma(x,y) = 1 - g_\sigma(x,y) = 1 - e^{-\frac{(x-a)^2 + (y-b)^2}{2\sigma^2}}
+        g_\sigma(x,y) = 1 - e^{-\frac{(x-a)^2 + (y-b)^2}{2\sigma^2}}
     \]
-     
-\begin{figure}[p]
+    where $\sigma $ is the variance of the gaussian function and $(a,b)$ is the center of the peak.
+    This is discretized over the size of the original image, with the center as the midpoint of the
+    image, as implemented in the function \texttt{gaussian\_filter(...)}.
+    \lstinputlisting[firstline=67, lastline=114]{p4.py}
+    A 3D plot of this function is shown in \textbf{Figure 2} with variance $\sigma=15$.
+    
+    \newpage
+
+    After we convert the original image into a 2D array, we use this filter by applying it
+    to the fourier transform of the original image:
+    \lstinputlisting[firstline=139, lastline=152]{p4.py}
+    
+    The results of this procedure are shown in \textbf{Figure 1}. Our choice for this particular
+    was entirely heuristic. Higher variances allow for more sharply defined edges (i.e. features) to
+    remain in the filtered image, at the cost of increased noise. Meanwhile,
+    lower variances reduce noise more significantly, at the cost of blurred edges / reduced features.
+    The empirical determination of an appropriate value for $\sigma$ is explored in
+    \textbf{Figure 3--4}. The relevant code can be found in the file \texttt{p4\_varspread.py}.
+
+    \begin{figure}[p]
     \begin{center}
         \includegraphics[width=0.8\textwidth]{prob4}
         \caption{
@@ -362,21 +382,41 @@ Show that for any functions $f,g,h$ on $\R$, $f\star (g \star h) = (f\star g) \s
 \begin{figure}[p]
     \begin{center}
         \includegraphics[width=0.8\textwidth]{varspread}
-        \caption{Least squares polynomial degree (2) from \textbf{Problem 1(a)}}
+        \caption{
+            A gaussian filter with variance $\sigma$ is applied to the source image \textbf{(original)}.
+            The remaining images are result of gaussian filtering with variance
+            $\sigma=2,5,15,25,35$. With low variance (e.g. $\sigma=2,5$),
+            almost all detail (i.e. edges) is lost, but none of the original noise is present.
+            Higher variances (e.g. $\sigma=25,35$) allow retention of edges, but also retain some of the
+            original noise. A suitable value for $\sigma$ will compromise between these two extremes:
+            in this case, choosing $\sigma=15$ allows for a significant reduction of the original noise
+            while still retaining the defining features/edges of the original.
+        }
     \end{center}
 \end{figure}
 
 \begin{figure}[p]
     \begin{center}
         \includegraphics[width=0.8\textwidth]{varspread-hists}
-        \caption{Histograms of a sample image \textsf{lena\_noisy.png} where }
+        \caption{
+            Histograms of each image in \textit{Figure 3}. We see that in all cases, the most
+            extreme frequencies are removed (notice the prominent spike at 255 (white) in the histogram
+            of the original image and its absense in the remaining histograms). Higher variances
+            (e.g. $\sigma=15,25,35$) emphasize more of the lowest frequency content
+            and highest frequency content--this translates to better defined edges, but more of the
+            original noise retained. Lower variances (e.g. $\sigma=2,5$) result in a clear spike in a
+            particular range, at the expense of either extreme. Note that
+            these histograms only contain
+            pixel values of the central the image itself without a border; that is, the original white border present
+            (see \textit{Figure 1(a,d)}) has been removed.
+        }
     \end{center}
 \end{figure}
 
 \end{prob}
 
 \hrulefill
-\newpage
+\clearpage
 %%%%PROBLEM 5
 \begin{prob}[Hybrid images]
     In \texttt{hybrid.py}, we use the techniques developed in four to create \textit{hybrid images}.
@@ -393,7 +433,9 @@ Show that for any functions $f,g,h$ on $\R$, $f\star (g \star h) = (f\star g) \s
     \textbf{Figure 5}, where a hybrid image is created from well-known portraits of Albert
     Einstein and Marilyn Monroe. The gaussian functions used both have variance $\sigma=10$, which 
     was found empirically to best demonstrate this phenomenon.
-    
+    The implementation of this is very similar to that of the previous problem,
+    performing the filtering procedure on both images simulatneously and adding the results:
+    \lstinputlisting[firstline=26, lastline=53]{hybrid.py}
     \textbf{Figure 6} demonstrates the
     same phenomenon on a different set of images,
     the iconic "Blue Marble" taken from Apollo 17 in 1972, and a cat. The gaussian function used here
