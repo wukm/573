@@ -11,44 +11,47 @@ from mpl_toolkits.mplot3d import Axes3D
 from p4 import gaussian_filter
 
 
-EINSTEIN = "cat.png"
-MARILYN = "grey_marble.png"
+CAT = "cat.png"
+EARTH = "marble.png"
 
 if __name__ == "__main__":
 
     # convert each to grayscale
-    einstein = PIL.Image.open(EINSTEIN).convert('L')
-    marilyn = PIL.Image.open(MARILYN).convert('L')
+    cat = PIL.Image.open(CAT).convert('L')
+    earth = PIL.Image.open(EARTH).convert('L')
     
-    einstein = np.array(einstein, dtype='f')
-    marilyn = np.array(marilyn, dtype='f')
+    cat = np.array(cat, dtype='f')
+    earth = np.array(earth, dtype='f')
     
-    # i honestly don't know why this happened.
-    marilyn = marilyn[:-3,:]
-
     # make sure we can combine these images directly
-    assert einstein.shape == marilyn.shape
-
-    ft_e = fft2(einstein)
-    ft_m = fft2(marilyn)
+    assert cat.shape == earth.shape
+    
+    # take fourier transforms
+    ft_e = fft2(cat)
+    ft_m = fft2(earth)
     
     # shift so hi-freq stuff is in the center
     ft_e = fftshift(ft_e) 
     ft_m = fftshift(ft_m) 
 
     # use gaussian filter as a low pass filter
-    flo, _ = gaussian_filter(einstein.shape, sigma=15)
+    flo, _ = gaussian_filter(cat.shape, sigma=15)
     
+    # create a high pass filter
     fhi = 1 - flo
     
+    # lowpass on earth, high-pass on cat
     lo_e = ifft2(ifftshift(flo * ft_e))
     hi_m = ifft2(ifftshift(fhi * ft_m))
     
+    # high pass on earth, low-pass on cat
     lo_m = ifft2(ifftshift(flo * ft_m))
     hi_e = ifft2(ifftshift(fhi * ft_e))
     
     hybrid = lo_e + hi_m 
     hybrid_rev = lo_m + hi_e
+    
+    # plotting stuff ################################
 
     # make a 2x2 plot and give all the subaxes names for ease
     fig, ((ax1, ax2, ax3, ax4)) = plt.subplots(1,4)
@@ -58,10 +61,7 @@ if __name__ == "__main__":
     ax3.axis('off')
     ax4.axis('off')
 
-    ax1.imshow(einstein, cmap=cm.gray)
-    ax2.imshow(marilyn, cmap=cm.gray)
+    ax1.imshow(cat, cmap=cm.gray)
+    ax2.imshow(earth, cmap=cm.gray)
     ax3.imshow(hybrid.real, cmap=cm.gray)
     ax4.imshow(hybrid_rev.real, cmap=cm.gray)
-
-    fig.show()
-
