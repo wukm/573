@@ -1,7 +1,7 @@
 # 573
-work folder for a  project-oriented scientific computing class
+work folder for a project-oriented scientific computing class
 
-![alt tag](https://raw.github.com/wukm/573/master/hw3/report/doggy_splines.png)
+![alt tag](https://raw.github.com/wukm/573/master/hw4/report/varspread.png)
 
 notes about this code
 ---------------------
