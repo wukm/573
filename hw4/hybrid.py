@@ -48,6 +48,7 @@ if __name__ == "__main__":
     lo_m = ifft2(ifftshift(flo * ft_m))
     hi_e = ifft2(ifftshift(fhi * ft_e))
     
+    # combine the lowpassed and highpassed images to produce the hybrid
     hybrid = lo_e + hi_m 
     hybrid_rev = lo_m + hi_e
     
