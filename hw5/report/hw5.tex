@@ -1,0 +1,313 @@
+% MATH 573 HW 5
+% LUKE WUKMER
+
+\documentclass[11pt]{article}
+
+% note: some of these are extremely useful and i don't remember why :o
+%\usepackage{savetrees} % disable custom geometry stuff if you do this
+\usepackage{titling}    % contol over title & stuff
+\usepackage{amsmath, amsthm, amssymb, amsfonts}
+\usepackage{amsxtra, amscd, geometry, graphicx}
+\usepackage{endnotes}
+\usepackage{cancel}
+\usepackage{wrapfig}    %inline figs
+\usepackage{bm} %allows fancy stuff like bold greek in math mode
+\usepackage{alltt}
+\usepackage{enumerate} %more/easier control over lists, also see enumitem
+%\usepackage[all,cmtip]{xypic}
+\usepackage{mathrsfs}
+\usepackage{listings} % code with syntax highlighting etc
+\usepackage{caption}
+\usepackage{tabu}     % more customizable tables
+%\usepackage{subfigure}
+%\usepackage{subcaption}
+%\usepackage[pdftex]{hyperref}
+%\usepackage[dvips,bookmarks,bookmarksopen,backref,colorlinks,linkcolor={blue},citecolor={blue},urlcolor={blue}](hyperref}
+
+
+\usepackage{color}
+
+\definecolor{mygreen}{rgb}{0,0.6,0}
+\definecolor{mygray}{rgb}{0.5,0.5,0.5}
+\definecolor{mymauve}{rgb}{0.58,0,0.82}
+
+\lstset{ %
+  backgroundcolor=\color{white},   % choose the background color; you must add \usepackage{color} or \usepackage{xcolor}
+  basicstyle=\footnotesize,        % the size of the fonts that are used for the code
+  breakatwhitespace=false,         % sets if automatic breaks should only happen at whitespace
+  breaklines=true,                 % sets automatic line breaking
+  captionpos=b,                    % sets the caption-position to bottom
+  commentstyle=\color{mygreen},    % comment style
+  deletekeywords={...},            % if you want to delete keywords from the given language
+  escapeinside={\%*}{*)},          % if you want to add LaTeX within your code
+  extendedchars=true,              % lets you use non-ASCII characters; for 8-bits encodings only, does not work with UTF-8
+  frame=single,	                   % adds a frame around the code
+  keepspaces=true,                 % keeps spaces in text, useful for keeping indentation of code (possibly needs columns=flexible)
+  keywordstyle=\color{blue},       % keyword style
+  language=Python,                 % the language of the code
+  otherkeywords={*,...},           % if you want to add more keywords to the set
+  numbers=left,                    % where to put the line-numbers; possible values are (none, left, right)
+  numbersep=5pt,                   % how far the line-numbers are from the code
+  numberstyle=\tiny\color{mygray}, % the style that is used for the line-numbers
+  rulecolor=\color{black},         % if not set, the frame-color may be changed on line-breaks within not-black text (e.g. comments (green here))
+  showspaces=false,                % show spaces everywhere adding particular underscores; it overrides 'showstringspaces'
+  showstringspaces=false,          % underline spaces within strings only
+  showtabs=false,                  % show tabs within strings adding particular underscores
+  stepnumber=2,                    % the step between two line-numbers. If it's 1, each line will be numbered
+  stringstyle=\color{mymauve},     % string literal style
+  tabsize=2,	                   % sets default tabsize to 2 spaces
+  title=\lstname                   % show the filename of files included with \lstinputlisting; also try caption instead of title
+}
+% change up the fonts (pick one only)
+%\usepackage{times}%
+\usepackage{helvet}%
+%\usepackage{palatino}%
+%\usepackage{bookman}%
+
+
+% These are italic.
+\theoremstyle{plain}
+\newtheorem{thm}{Theorem}
+\newtheorem*{thm*}{Theorem}
+\newtheorem{prop}{Proposition}
+\newtheorem*{prop*}{Proposition}
+\newtheorem{conj}{Conjecture}
+\newtheorem*{conj*}{Conjecture}
+\newtheorem{lem}{Lemma}
+  \makeatletter
+  \@addtoreset{lem}{thm}
+  \makeatother 
+\newtheorem*{lem*}{Lemma}
+\newtheorem{cor}{Corollary}
+  \makeatletter
+  \@addtoreset{cor}{thm}
+  \makeatother 
+\newtheorem*{cor*}{Corollary}
+
+%\newtheorem{lem}[thm]{Lemma}
+%\newtheorem{remark}[thm]{Remark}
+%\newtheorem{cor}[thm]{Corollary}
+%\newtheorem{prop}[thm]{Proposition}
+%\newtheorem{conj}[thm]{Conjecture}
+
+% These are normal (i.e. not italic).
+\theoremstyle{definition}
+\newtheorem*{ack*}{Acknowledgements}
+\newtheorem*{app*}{Application}
+\newtheorem*{apps*}{Applications}
+\newtheorem{defn}{Definition}
+\newtheorem*{defn*}{Definition}
+\newtheorem{eg}{Example}
+  \makeatletter
+  \@addtoreset{eg}{thm}
+  \makeatother 
+\newtheorem*{eg*}{Example}
+\newtheorem*{egs*}{Examples}
+\newtheorem{ex}{Exercise}
+\newtheorem*{ex*}{Exercise}
+\newtheorem*{quest*}{Question}
+\newtheorem{rem}{Remark}
+\newtheorem*{rem*}{Remark}
+\newtheorem{rems}{Remarks}
+\newtheorem*{rems*}{Remarks}
+\newtheorem{prob}{Problem}
+\newtheorem*{prob*}{Problem}
+\newtheorem*{soln*}{Solution}
+\newtheorem{soln}{Solution}
+
+
+% New Commands: Common Math Symbols
+\providecommand{\R}{\mathbb{R}}%
+\providecommand{\N}{\mathbb{N}}%
+\providecommand{\Z}{{\mathbb{Z}}}%
+\providecommand{\sph}{\mathbb{S}}%
+\providecommand{\Q}{\mathbb{Q}}%
+\providecommand{\C}{{\mathbb{C}}}%
+\providecommand{\F}{\mathbb{F}}%
+\providecommand{\quat}{\mathbb{H}}%
+
+% haha, i originally forked this template from one provided by my abstract
+% algebra TA (back in 2012 or something). probably don't need most of these,
+% huh. 
+
+% New Commands: Operators
+\providecommand{\Gal}{\operatorname{Gal}}%
+\providecommand{\GL}{\operatorname{GL}}%
+\providecommand{\card}{\operatorname{card}}%
+\providecommand{\coker}{\operatorname{coker}}%
+\providecommand{\id}{\operatorname{id}}%
+\providecommand{\im}{\operatorname{im}}%
+\providecommand{\diam}{{\rm diam}}%
+\providecommand{\aut}{\operatorname{Aut}}%
+\providecommand{\inn}{\operatorname{Inn}}%
+\providecommand{\out}{{\rm Out}}%
+\providecommand{\End}{{\rm End}}%
+\providecommand{\rad}{{\rm Rad}}%
+\providecommand{\rk}{{\rm rank}}%
+\providecommand{\ord}{{\rm ord}}%
+\providecommand{\tor}{{\rm Tor}}%
+\providecommand{\comp}{{\text{ $\scriptstyle \circ$ }}}%
+\providecommand{\cl}[1]{\overline{#1}}%
+\providecommand{\tr}{{\sf trace}}%
+
+\renewcommand{\tilde}[1]{\widetilde{#1}}%
+\numberwithin{equation}{section}
+
+% i like the squiggly ones more. add as needed
+
+\renewcommand{\Psi}{\varPsi}
+
+\newcommand*\rfrac[2]{{}^{#1}\!/_{#2}}
+
+% a very fancy dot product \ip{f}{g}
+\newcommand\ip[2]{ \left\langle {#1} , {#2} \right\rangle }
+
+% "s.t." for math mode
+\providecommand{\st}{\text{ s.t. }}
+
+% \norm{f} and such, super useful
+\newcommand{\norm}[1]{\left\lVert#1\right\rVert}
+
+% determinant
+%\newcommand{\det}[1]{\textsf{det}\left(#1\right)}
+
+% jacobian
+\providecommand{\J}{\textsf{J}}
+
+% this makes the spacing between lines of font a little bigger
+%\newcommand{\spacing}[1]{\renewcommand{\baselinestretch}{#1}\large\normalsize}
+%\spacing{1.2}
+
+\DeclareMathOperator*{\argmin}{arg\,min}
+\DeclareMathOperator*{\argmax}{arg\,max}
+
+\newcommand*\mcol[1]{\overset{\big\uparrow}{\underset{\big\downarrow}{#1}}}
+
+% Makes the margin size a little smaller, i gots stuff to say
+\geometry{letterpaper,margin=.8in}
+
+% titling stuff (from package titling)
+\posttitle{\par\end{center}}
+\setlength{\droptitle}{-.5in}
+% END PREAMBLE %%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+\begin{document}
+
+\title{Math 573 HW\textsuperscript{\#}5}
+\author{Luke Wukmer}
+\date{Fall 2015}
+\maketitle \thispagestyle{empty} % remove the page number from the first page
+\lstset{language=Python}
+
+%%%% PROBLEM 1
+\begin{prob}[Production Problem]
+
+An electronics firm manufactures integrated circuits for radios,
+televisions, and stereos. For the next month it has available 1500 units of materials and 920
+units of labor. The requirements and selling price of one of each of the above products are
+given in the following table.
+
+\begin{center}
+\begin{tabu}{>{\itshape}c|ccc}
+    \hline
+    \rowfont{\itshape} &  Units of Material & Units of Labor & Selling Price (\$) \\
+    \hline 
+    Radio  & 2    & 1   & 8 \\
+    TV     & 12   & 8   & 60 \\
+    Stereo & 15   & 6   & 45 
+\end{tabu}
+\end{center}
+
+First determine a production schedule that maximizes income then solve
+the linear programming problem with the \textbf{Simplex Method}.
+In particular, with the \textbf{Simplex Tableau}.
+\end{prob}
+
+\begin{soln*} 
+    Our goal is to maximize the profit function $p(x_1, x_2, x_3) = 8 x_1 + 60 x_2 + 45 x_3$ subject to
+    \[
+         \begin{cases}
+             2 x_1 + 12 x_2 + 15 x_3 \le 1500 \\
+             x_1 + 8 x_2 + 6 x_3 \le 920 \\
+        x_i \ge 0 \end{cases}
+    \]
+
+Convert to equalities by adding the slack variables $x_4, x_5$:
+    \[
+         \begin{cases}
+             2 x_1 + 12 x_2 + 15 x_3 + x_4 = 1500 \\
+             x_1 + 8 x_2 + 6 x_3 + x_5 = 920 \\
+        x_i \ge 0 \end{cases}
+    \]
+Finally we convert this into a minimization problem by defining the objective function
+\[
+        C(\bm{x}) := -p(\bm{x}) = - 8 x_1 - 60 x_2 - 45 x_3 - z_0 
+    \]
+From this we form the simplex tableau
+\begin{tabu}{c|c|c|c|c|c|c}
+    ~ & $x_1$ & $x_2$ & $x_3$ & $x_4$ & $x_5$ & \textit{constant} \\
+    \hline
+    $\bm{x_4}$ & 2 & 12 & 15 & 1 & 0 & 1500 \\
+    $\bm{x_5}$ & 1 & 8 & 6 & 0 & 1 & 920 \\
+    $\bm{c}$   & -8 & -60 & -45 & 0 & 0 & 0
+\end{tabu}
+
+From this we see that $\{x_4, x_5\}$ form a set of basic variables, and that the objective function 
+is written only in terms of non-basic variables. Thus, this system is already in canonical form,
+and we can begin the simplex method.
+
+Choose smallest negative $c_i \Rightarrow s = 1$
+\begin{align*}
+    r &= \argmin \left\{ \frac{b_i}{a_{is}} : 1 \le i \le m , a_{is} > 0 \right\}\\
+      &= \argmin \left\{ \frac{1500}{2} , \frac{920}{2} \right\} = 1
+\end{align*}
+So pivot at $2x_1$ in row 1 ; i.e. replace $R_1 \to \frac{1}{2} R_1$ then
+$R_2 \to -R_1 + R_2 \,,\, R_3 \to 8R_1 + R_3 $
+\begin{center}
+\begin{tabu}{c|c|c|c|c|c|c}
+    ~ & $x_1$ & $x_2$ & $x_3$ & $x_4$ & $x_5$ & \textit{constant} \\
+    \hline
+    $\bm{x_1}$ & 1 & 6 & $\frac{15}{2}$ & 1 & 0 & 750 \\
+    $\bm{x_5}$ & 0 & 2 & $-\frac{3}{2}$ & -1 & 1 & 170 \\
+    $\bm{c}$   & 0 & -12 & 15 & 8 & 0 & 6000
+\end{tabu}
+\end{center}
+
+Now $c_2 < 0  \Rightarrow s = 2$.
+
+\begin{align*}
+    r &= \argmin \left\{ \frac{b_i}{a_{is}} : 1 \le i \le m , a_{is} > 0 \right\}\\
+      &= \argmin \left\{ \frac{750}{6} , \frac{170}{2} \right\} = 2
+\end{align*}
+So pivot at $2x_2$ in row 2 ; i.e. replace $R_2 \to \frac{1}{2} R_2$ then
+$R_1 \to -6R_2 + R_1 \,,\, R_3 \to 12R_2 + R_3 $
+
+\begin{center}
+\begin{tabu}{c|c|c|c|c|c|c}
+    ~ & $x_1$ & $x_2$ & $x_3$ & $x_4$ & $x_5$ & \textit{constant} \\
+    \hline
+    $\bm{x_1}$ & 1 & 0 & 3 & 4 & -3 & 240 \\
+    $\bm{x_2}$ & 0 & 1 & $-\frac{3}{4}$ & -$\frac{1}{2}$ & $\frac{1}{2}$ & 85 \\
+    $\bm{c}$   & 0 & 0 & 6 & 2 & 6 & 7020
+\end{tabu}
+\end{center}
+Since all $c_i$ are nonnegative, we have arrived at a feasible solution in terms of the basic variables
+$\{x_1,x_2\}$.
+\qed
+\end{soln*}
+\hrulefill
+%\newpage
+
+%%%% PROBLEM 2
+\begin{prob}[Simplex Method]
+    \dots
+\end{prob}
+
+\begin{soln*}
+    \dots
+\end{soln*}
+
+\hrulefill
+\end{document}
