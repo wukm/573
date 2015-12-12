@@ -1,34 +1,88 @@
 #!/usr/bin/env python3
 
 import numpy as np
+import numpy.ma as ma
+from itertools import count
 
-def simplex(f, A, b):
+np.set_printoptions(precision=3, suppress=True)
+
+def simplex(f, A, b, zo=0):
     """
     solves a linear programming problem via simplex method
     input is the system f, A, b in canonical form.
+    
+    i.e. minimize (f^T)x subject to Ax=b
+
+    This is immediately converted into the tableau (size M+1 by N+1)
+
+                    | ^  
+            A       | b
+    ________________|___
+        <-  f ->    | zo
+
     """
-
-    # assert is_canonical(A)
+    # make sure these are the correct data type (otherwise pivoting is bad) 
+    f = f.astype('f')
+    A = A.astype('f')
+    b = b.astype('f')
+    print('testing canonicality')
+    print(is_canonical(A))
     
-    # if all c_i nonnegative
-    if (f >= 0).all():
-        print("solution found!")
-        # ...
+    # MAKE INITIAL TABLEAU
+    T = np.vstack((A, f))
+    _b = np.vstack((b.reshape(-1,1), np.array(zo, dtype='f')))
+    T = np.hstack((T, _b))
 
-    # test theorem 2
-    for s, c in enumerate(f):
-        # if there exists a negative c_s
-        if c < 0:
-            # where a_{is} negative for all i 
-            if (A[:,s] < 0).all():
-                # output tableau?
-                raise Exception("objective function is unbounded below by theorem 2")
-    else:
-        # step two complete, continue
-        print("boundedness check complete, continuing")
-    
+    for it in count(1):
+        # this may seem weird, but now these are linked to T
+        f = T[-1,:-1]
+        b = T[:-1,-1]
+        z0 = T[-1,-1]
+        A = T[:-1,:-1]
 
-    # blah
+        # if all c_i nonnegative
+        if all(f >= 0):
+            print("solution found in {} pivots".format(it-1))
+            break
+        else:
+            print('no solution yet...')
+            print('- '*20)
+
+
+        # test theorem 2
+        for s, c in enumerate(f):
+            # if there exists a negative c_s
+            if c < 0:
+                # where a_{is} negative for all i 
+                if (A[:,s] < 0).all():
+                    print(T)
+                    raise Exception("objective function is unbounded below by theorem 2")
+        else:
+            # step two complete, continue
+            print("boundedness check complete, continuing")
+        
+        # find the smallest magnitude negative entry
+        s = ma.masked_where(f >= 0, f).argmax()
+        print('pivoting in column {}'.format(s))  
+        
+        # step 3.2 find row r that has the min{b[i] / a[i,s] : a[i,s] > 0}
+        # note that argmin will print out lowest index if there is a tie
+        _m = ma.masked_where(A[:,s] < 0, A[:,s])
+        r = (b / _m).argmin()
+        print('pivoting in row {}'.format(s))
+        
+        print('pivoting...')
+        T[r] = T[r] / T[r,s]
+ 
+        for i in range(T.shape[0]):
+            if i == r:
+                continue
+            else:
+                T[i] = T[i] - T[i,s]*T[r]
+        print("after pivot #{}".format(it))
+        print(T)
+
+    return T
 
 def is_canonical(A):
     """
@@ -84,9 +138,11 @@ def is_canonical(A):
 
         # if this fails then there are two basic variables in some row
         if sum(test) != 1:
+            # this column of eye(M) appears more than once
             return False
         else:
-            k = test.index(1) # x_k is a basic variable and nonzero in row m
+            # x_k is a basic variable and nonzero in row m
+            k = test.index(1)
         print("basic variable x_{} in row {}".format(k,m))
 
     return True
@@ -95,9 +151,4 @@ def is_standard_form(f, A, b):
     
     pass
 
-if __name__ == "__main__":
 
-     import numpy as np
-     A = np.array([[0, 1, 4, 5, 6, 7, 0],
-                   [1, 0, 0, 3, 4, 1, 0],
-                   [0, 0, 0, 0, 0, 0, 1]])
