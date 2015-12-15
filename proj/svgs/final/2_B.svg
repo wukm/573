@@ -15,7 +15,7 @@
    viewBox="0 0 744.09448819 1052.3622047"
    height="297mm"
    width="210mm"
-   sodipodi:docname="all.svg">
+   sodipodi:docname="2_B.svg">
   <sodipodi:namedview
      objecttolerance="20"
      showborder="true"
@@ -287,7 +287,7 @@
      inkscape:groupmode="layer"
      id="layer7"
      inkscape:label="4 face points"
-     style="display:none">
+     style="display:inline">
     <ellipse
        style="display:inline;opacity:1;fill:#ff0000;fill-opacity:1;stroke:#ff0000;stroke-width:1.5;stroke-miterlimit:4;stroke-dasharray:3, 1.5;stroke-dashoffset:0;stroke-opacity:1"
        id="path11454"
@@ -342,7 +342,7 @@
      inkscape:groupmode="layer"
      id="layer8"
      inkscape:label="5 edge midpoints"
-     style="display:none;opacity:1">
+     style="display:inline;opacity:1">
     <ellipse
        ry="3.3594902"
        rx="3.2814043"
@@ -404,7 +404,7 @@
      inkscape:groupmode="layer"
      id="layer9"
      inkscape:label="6 edge vectors"
-     style="display:none;opacity:1">
+     style="display:inline;opacity:1">
     <path
        style="fill:#000000;fill-rule:evenodd;stroke:#000000;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:1, 2;stroke-dashoffset:0;stroke-opacity:1"
        d="m 265.28079,516.67134 0,0 313.27492,9.21006"
@@ -474,7 +474,7 @@
      inkscape:groupmode="layer"
      id="layer10"
      inkscape:label="7 edge points"
-     style="display:none">
+     style="display:inline">
     <circle
        inkscape:transform-center-y="97.857165"
        inkscape:transform-center-x="-35"

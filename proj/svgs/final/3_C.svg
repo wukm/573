@@ -15,7 +15,7 @@
    viewBox="0 0 744.09448819 1052.3622047"
    height="297mm"
    width="210mm"
-   sodipodi:docname="all.svg">
+   sodipodi:docname="3_C.svg">
   <sodipodi:namedview
      objecttolerance="20"
      showborder="true"
@@ -25,9 +25,9 @@
      inkscape:window-height="1033"
      inkscape:window-width="1916"
      showgrid="false"
-     inkscape:current-layer="layer11"
+     inkscape:current-layer="layer12"
      inkscape:document-units="px"
-     inkscape:cy="633.71483"
+     inkscape:cy="690.85769"
      inkscape:cx="310.11868"
      inkscape:zoom="1.4"
      inkscape:pageshadow="2"
@@ -287,7 +287,7 @@
      inkscape:groupmode="layer"
      id="layer7"
      inkscape:label="4 face points"
-     style="display:none">
+     style="display:inline">
     <ellipse
        style="display:inline;opacity:1;fill:#ff0000;fill-opacity:1;stroke:#ff0000;stroke-width:1.5;stroke-miterlimit:4;stroke-dasharray:3, 1.5;stroke-dashoffset:0;stroke-opacity:1"
        id="path11454"
@@ -319,20 +319,6 @@
     <ellipse
        ry="3.3594902"
        rx="3.2814043"
-       cy="387.83734"
-       cx="157.51947"
-       id="ellipse11496"
-       style="opacity:0.62999998;fill:#ff0000;fill-opacity:1;stroke:#ff0000;stroke-width:1.5;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1" />
-    <ellipse
-       ry="3.3594902"
-       rx="3.2814043"
-       cy="677.9884"
-       cx="330.1217"
-       id="ellipse11517"
-       style="opacity:0.5;fill:#ff0000;fill-opacity:1;stroke:#ff0000;stroke-width:1.5;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1" />
-    <ellipse
-       ry="3.3594902"
-       rx="3.2814043"
        cy="516.67133"
        cx="265.28079"
        id="ellipse11560"
@@ -342,7 +328,7 @@
      inkscape:groupmode="layer"
      id="layer8"
      inkscape:label="5 edge midpoints"
-     style="display:none;opacity:1">
+     style="display:inline;opacity:1">
     <ellipse
        ry="3.3594902"
        rx="3.2814043"
@@ -350,20 +336,6 @@
        cx="303.19666"
        id="ellipse11519"
        style="display:inline;opacity:1;fill:#ff9955;fill-opacity:1;stroke:#ff9955;stroke-width:1.5;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1" />
-    <ellipse
-       ry="3.3594902"
-       rx="3.2814043"
-       cy="447.64935"
-       cx="54.762672"
-       id="ellipse11527"
-       style="display:inline;opacity:1;fill:#ff7f2a;fill-opacity:1;stroke:#ff7f2a;stroke-width:1.5;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1" />
-    <ellipse
-       style="display:inline;opacity:1;fill:#ff7f2a;fill-opacity:1;stroke:#ff7f2a;stroke-width:1.5;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
-       id="ellipse11525"
-       cx="227.36491"
-       cy="737.80042"
-       rx="3.2814043"
-       ry="3.3594902" />
     <ellipse
        ry="3.3594902"
        rx="3.2814043"
@@ -378,27 +350,6 @@
        cy="304.75238"
        rx="3.2814043"
        ry="3.3594902" />
-    <ellipse
-       ry="3.3594902"
-       rx="3.2814043"
-       cy="166.70834"
-       cx="195.43535"
-       id="ellipse11791"
-       style="display:inline;opacity:1;fill:#ff9955;fill-opacity:1;stroke:#ff9955;stroke-width:1.5;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1" />
-    <ellipse
-       style="display:inline;opacity:1;fill:#ff9955;fill-opacity:1;stroke:#ff9955;stroke-width:1.5;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
-       id="ellipse11793"
-       cx="540.63983"
-       cy="747.01044"
-       rx="3.2814043"
-       ry="3.3594902" />
-    <ellipse
-       ry="3.3594902"
-       rx="3.2814043"
-       cy="608.96637"
-       cx="119.6036"
-       id="ellipse11795"
-       style="display:inline;opacity:0.57999998;fill:#ff9955;fill-opacity:1;stroke:#ff9955;stroke-width:1.5;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1" />
   </g>
   <g
      inkscape:groupmode="layer"
@@ -505,7 +456,7 @@
        inkscape:transform-center-y="97.857165" />
   </g>
   <g
-     style="display:none"
+     style="display:inline"
      inkscape:label="8 adj face points wrt vertex"
      id="g11813"
      inkscape:groupmode="layer">
@@ -521,12 +472,19 @@
        cy="380.92792"
        rx="6.4793091"
        ry="6.5202026" />
+    <ellipse
+       ry="6.5202026"
+       rx="6.4793091"
+       cy="408.07077"
+       cx="456.19528"
+       id="ellipse13693"
+       style="opacity:0.57999998;fill:#0000ff;fill-opacity:1;fill-rule:evenodd;stroke:#483737;stroke-width:1;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1" />
   </g>
   <g
      inkscape:groupmode="layer"
      id="layer12"
      inkscape:label="9 emp adjacent to vertex"
-     style="display:none">
+     style="display:inline">
     <path
        style="fill:none;fill-rule:evenodd;stroke:#ff00ff;stroke-width:1.60000002;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:3.2, 3.2;stroke-dashoffset:1.60000002;stroke-opacity:1"
        d="m 303.19666,295.54233 313.2749,9.21005 -140.67265,280.94101 z"
@@ -545,24 +503,6 @@
        cx="513.71478"
        cy="364.56436"
        r="5.5709352" />
-    <circle
-       r="5.5709352"
-       cy="226.52031"
-       cx="92.678543"
-       id="circle13470"
-       style="opacity:1;fill:#00ffff;fill-opacity:1;fill-rule:evenodd;stroke:#00ffff;stroke-width:0;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1" />
-    <circle
-       style="opacity:1;fill:#00ffff;fill-opacity:1;fill-rule:evenodd;stroke:#00ffff;stroke-width:0;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
-       id="circle13472"
-       cx="16.8468"
-       cy="668.77838"
-       r="5.5709352" />
-    <circle
-       r="5.5709352"
-       cy="806.82239"
-       cx="437.88303"
-       id="circle13474"
-       style="opacity:1;fill:#00ffff;fill-opacity:1;fill-rule:evenodd;stroke:#00ffff;stroke-width:0;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1" />
   </g>
   <g
      inkscape:groupmode="layer"

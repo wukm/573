@@ -15,7 +15,7 @@
    viewBox="0 0 744.09448819 1052.3622047"
    height="297mm"
    width="210mm"
-   sodipodi:docname="all.svg">
+   sodipodi:docname="3_A.svg">
   <sodipodi:namedview
      objecttolerance="20"
      showborder="true"
@@ -25,7 +25,7 @@
      inkscape:window-height="1033"
      inkscape:window-width="1916"
      showgrid="false"
-     inkscape:current-layer="layer11"
+     inkscape:current-layer="layer7"
      inkscape:document-units="px"
      inkscape:cy="633.71483"
      inkscape:cx="310.11868"
@@ -287,7 +287,7 @@
      inkscape:groupmode="layer"
      id="layer7"
      inkscape:label="4 face points"
-     style="display:none">
+     style="display:inline">
     <ellipse
        style="display:inline;opacity:1;fill:#ff0000;fill-opacity:1;stroke:#ff0000;stroke-width:1.5;stroke-miterlimit:4;stroke-dasharray:3, 1.5;stroke-dashoffset:0;stroke-opacity:1"
        id="path11454"
@@ -316,20 +316,6 @@
        cy="516.67133"
        rx="3.2814043"
        ry="3.3594902" />
-    <ellipse
-       ry="3.3594902"
-       rx="3.2814043"
-       cy="387.83734"
-       cx="157.51947"
-       id="ellipse11496"
-       style="opacity:0.62999998;fill:#ff0000;fill-opacity:1;stroke:#ff0000;stroke-width:1.5;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1" />
-    <ellipse
-       ry="3.3594902"
-       rx="3.2814043"
-       cy="677.9884"
-       cx="330.1217"
-       id="ellipse11517"
-       style="opacity:0.5;fill:#ff0000;fill-opacity:1;stroke:#ff0000;stroke-width:1.5;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1" />
     <ellipse
        ry="3.3594902"
        rx="3.2814043"
@@ -505,7 +491,7 @@
        inkscape:transform-center-y="97.857165" />
   </g>
   <g
-     style="display:none"
+     style="display:inline"
      inkscape:label="8 adj face points wrt vertex"
      id="g11813"
      inkscape:groupmode="layer">
