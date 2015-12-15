@@ -280,7 +280,8 @@ Now $c_2 < 0  \Rightarrow s = 2$.
 
 \begin{align*}
     r &= \argmin \left\{ \frac{b_i}{a_{is}} : 1 \le i \le m , a_{is} > 0 \right\}\\
-      &= \argmin \left\{ \frac{750}{6} , \frac{170}{2} \right\} = 2
+      &= \argmin \left\{ \underbrace{\frac{750}{6}}_{i=1} ,
+\underbrace{\frac{170}{2}}_{i=2} \right\} = 2
 \end{align*}
 So pivot at $2x_2$ in row 2 ; i.e. replace $R_2 \to \frac{1}{2} R_2$ then
 $R_1 \to -6R_2 + R_1 \,,\, R_3 \to 12R_2 + R_3 $
@@ -295,7 +296,9 @@ $R_1 \to -6R_2 + R_1 \,,\, R_3 \to 12R_2 + R_3 $
 \end{tabu}
 \end{center}
 Since all $c_i$ are nonnegative, we have arrived at a feasible solution in terms of the basic variables
-$\{x_1,x_2\}$.
+$\{x_1,x_2\}$. Our solution is $x^{\star} = (240, 85, 0, 0, 0)$ with maximized profit
+$ z = f^T x^{\star} = 7020$. 
+That is, the optimal production model is to produce 240 radios, 85 TVs, and 0 stereos.
 \qed
 \end{soln*}
 \hrulefill % ___________________________________________________________
@@ -303,12 +306,6 @@ $\{x_1,x_2\}$.
 
 %%%% PROBLEM 2
 \begin{prob}[Simplex Method]
-    \dots
+    We implemented a method
 \end{prob}
-
-\begin{soln*}
-    \dots
-\end{soln*}
-
-\hrulefill
 \end{document}
