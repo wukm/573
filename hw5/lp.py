@@ -20,6 +20,9 @@ def simplex(f, A, b, zo=0):
     ________________|___
         <-  f ->    | zo
 
+    
+    returns the final solution table T (see above)
+    as well as the solution x that minimizes (f^t)x
     """
     # make sure these are the correct data type (otherwise pivoting is bad) 
     f = f.astype('f')
@@ -81,8 +84,16 @@ def simplex(f, A, b, zo=0):
                 T[i] = T[i] - T[i,s]*T[r]
         print("after pivot #{}".format(it))
         print(T)
+    
+    # get basic variables from table
+    x = basic_variables(T)
+    # and the b values
+    b = T[:-1, -1]
 
-    return T
+    # now set each basic_variable to the b_i value in the corresponding column
+    B = b * np.eye(x.size, b.size) # basically just for broadcasting
+    x = (B.T * x).sum(axis=0) # wow this got matlabby
+    return T, x
 
 def is_canonical(A):
     """
@@ -147,8 +158,29 @@ def is_canonical(A):
 
     return True
 
-def is_standard_form(f, A, b):
+def basic_variables(T):
+    """ 
+    finds the basic variables from the simplex tableau X
+    returns a 1D vector of each variable x_i where x_i == 1 if it is a basic
+    variable, zero for nonbasic variables
+    """
+
+    # similar to the canonicality test
     
-    pass
+    M = T.shape[0] # number of rows
+    E = np.eye(M)
+    
+    bv = np.zeros_like(T[-1,:-1])
 
+    for m in range(M-1):
+        # find each column like [0 ... 0 1 0 ... 0] in table (excl. constants)
+        test = [all(E[m] == col) for col in T[:,:-1].T]
+        if sum(test) != 1:
+            # there are more than 1 basic variables in one row!
+            raise Exception("system isn't in canonical form")
+        else:
+            # x_k is a basic variable and nonzero in row m
+            k = test.index(1) # which row the 1 is in
 
+            bv[k] = 1
+    return bv

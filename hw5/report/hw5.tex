@@ -224,7 +224,7 @@ First determine a production schedule that maximizes income then solve
 the linear programming problem with the \textbf{Simplex Method}.
 In particular, with the \textbf{Simplex Tableau}.
 \end{prob}
-
+\dotfill % . . . . . . . . . . 
 \begin{soln*} 
     Our goal is to maximize the profit function $p(x_1, x_2, x_3) = 8 x_1 + 60 x_2 + 45 x_3$ subject to
     \[
@@ -254,16 +254,17 @@ From this we form the simplex tableau
     $\bm{c}$   & -8 & -60 & -45 & 0 & 0 & 0
 \end{tabu}
 
-From this we see that $\{x_4, x_5\}$ form a set of basic variables, and that the objective function 
+From this we see that $\{x_4, x_5\}$ forms a set of basic variables, and that the objective function 
 is written only in terms of non-basic variables. Thus, this system is already in canonical form,
 and we can begin the simplex method.
 
 Choose smallest negative $c_i \Rightarrow s = 1$
 \begin{align*}
     r &= \argmin \left\{ \frac{b_i}{a_{is}} : 1 \le i \le m , a_{is} > 0 \right\}\\
-      &= \argmin \left\{ \frac{1500}{2} , \frac{920}{2} \right\} = 1
+      &= \argmin \left\{ \underbrace{\frac{1500}{2}}_{i=1} ,
+                         \underbrace{\frac{920}{1}}_{i=2} \right\} = 1
 \end{align*}
-So pivot at $2x_1$ in row 1 ; i.e. replace $R_1 \to \frac{1}{2} R_1$ then
+So pivot in variable $x_s \to 2x_1$ in row $r=1$; i.e. replace $R_1 \to \frac{1}{2} R_1$ then
 $R_2 \to -R_1 + R_2 \,,\, R_3 \to 8R_1 + R_3 $
 \begin{center}
 \begin{tabu}{c|c|c|c|c|c|c}
@@ -297,7 +298,7 @@ Since all $c_i$ are nonnegative, we have arrived at a feasible solution in terms
 $\{x_1,x_2\}$.
 \qed
 \end{soln*}
-\hrulefill
+\hrulefill % ___________________________________________________________
 %\newpage
 
 %%%% PROBLEM 2
